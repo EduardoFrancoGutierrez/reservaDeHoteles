@@ -1,8 +1,9 @@
-package com.miw.hotel.repository;
+package com.miw.hotel;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.miw.hotel.model.Hotel;
+
+
 
 public interface HotelRepository extends MongoRepository<Hotel, String> {
 

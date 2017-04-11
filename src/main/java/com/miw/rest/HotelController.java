@@ -1,4 +1,4 @@
-package com.miw.hotel.controller;
+package com.miw.rest;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.miw.hotel.model.Hotel;
-import com.miw.hotel.repository.HotelRepository;
+import com.miw.hotel.Hotel;
+import com.miw.hotel.HotelRepository;
 
 @RestController
 @RequestMapping(value = "/api/hotels")

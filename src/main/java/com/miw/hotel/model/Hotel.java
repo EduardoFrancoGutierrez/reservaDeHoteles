@@ -1,4 +1,4 @@
-package com.miw.hotel;
+package com.miw.hotel.model;
 
 public class Hotel {
     private String name;

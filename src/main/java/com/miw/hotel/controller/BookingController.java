@@ -26,14 +26,14 @@ public class BookingController {
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Booking getBook(@PathVariable(value="id")Integer id){
+    public Booking getBook(@PathVariable(value="id")String id){
         return bookRepository.findById(id);
     }
     
     @RequestMapping(value = "", method = RequestMethod.DELETE)
-    public void cancelBooking(@RequestBody int id){
+    public void cancelBooking(@RequestBody String id){
         Booking booking = bookRepository.findById(id);
-        booking.setStatus(Status.CANCEL);
+        booking.setStatus(Status.CANCEL.name());
     	bookRepository.save(booking);
     }
 

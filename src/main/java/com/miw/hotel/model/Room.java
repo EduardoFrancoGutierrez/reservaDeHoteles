@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Room {
 
-	private int id;
+	private String id;
 	
 	private Hotel hotel;
 	
@@ -14,7 +14,7 @@ public class Room {
 	
 	public Room() {}
 
-	public Room(int id, Hotel hotel, BigDecimal pricePerHour, RoomType type) {
+	public Room(String id, Hotel hotel, BigDecimal pricePerHour, RoomType type) {
 		super();
 		this.id = id;
 		this.hotel = hotel;
@@ -22,11 +22,11 @@ public class Room {
 		this.type = type;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -64,7 +64,7 @@ public class Room {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((hotel == null) ? 0 : hotel.hashCode());
-		result = prime * result + id;
+//		result = prime * result + id;
 		return result;
 	}
 

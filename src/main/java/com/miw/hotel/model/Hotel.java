@@ -7,7 +7,7 @@ public class Hotel {
 
 	@Id ObjectId databaseId;
 
-	private int id;
+	private String id;
 
 	private String name;
 	
@@ -21,7 +21,7 @@ public class Hotel {
 	
 	public Hotel(){}
 
-	public Hotel(int id, String name, String postalCode, String nameDirector, String lastNameDirector, String image) {
+	public Hotel(String id, String name, String postalCode, String nameDirector, String lastNameDirector, String image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -31,11 +31,11 @@ public class Hotel {
 		this.image = image;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -89,7 +89,7 @@ public class Hotel {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+//		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}

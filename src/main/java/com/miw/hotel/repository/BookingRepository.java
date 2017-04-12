@@ -8,5 +8,7 @@ public interface BookingRepository extends MongoRepository<Booking, String> {
 
     public Booking findById(String id);
     
+    Booking findTopOrderByIdDesc();
+    
     
 }

@@ -13,9 +13,9 @@ public class HotelTest {
 
 	@Test
 	public void testHotelIntStringStringStringStringString() {
-		Hotel hotel = new Hotel(1, "Melia1", "28045", "Juan", "Perez", "imagen");
+		Hotel hotel = new Hotel(1+"", "Melia1", "28045", "Juan", "Perez", "imagen");
 		assertNotNull(hotel);
-		assertEquals(1, hotel.getId());
+		assertEquals(1+"", hotel.getId());
 		assertEquals("Melia1", hotel.getName());
 		assertEquals("28045", hotel.getPostalCode());
 		assertEquals("Juan", hotel.getNameDirector());
@@ -26,9 +26,9 @@ public class HotelTest {
 
 	@Test
 	public void testEqualsObject() {
-		assertEquals(new Hotel(1, "Melia1", "28045", "Juan", "Perez", "imagen"), new Hotel(1, "Melia1", "28045", "Juan", "Perez", "imagen"));
-		assertNotEquals(new Hotel(1, "Melia1", "28045", "Juan", "Perez", "imagen"), new Hotel(1, "Melia2", "28045", "Juan", "Perez", "imagen"));
-		assertNotEquals(new Hotel(1, "Melia1", "28045", "Juan", "Perez", "imagen"), new Hotel(2, "Melia1", "28045", "Juan", "Perez", "imagen"));
+		assertEquals(new Hotel(1+"", "Melia1", "28045", "Juan", "Perez", "imagen"), new Hotel(1+"", "Melia1", "28045", "Juan", "Perez", "imagen"));
+		assertNotEquals(new Hotel(1+"", "Melia1", "28045", "Juan", "Perez", "imagen"), new Hotel(1+"", "Melia2", "28045", "Juan", "Perez", "imagen"));
+		assertNotEquals(new Hotel(1+"", "Melia1", "28045", "Juan", "Perez", "imagen"), new Hotel(2+"", "Melia1", "28045", "Juan", "Perez", "imagen"));
 	}
 
 }

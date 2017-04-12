@@ -7,8 +7,9 @@ import com.miw.hotel.model.Booking;
 
 public interface BookingRepository extends MongoRepository<Booking, String> {
 
-    public Booking findById(String id);
-    
-    public List<Booking> findByClient_Id(String id);
- 
+    Booking findById(String id);    
+
+    Booking findTopOrderById();   
+
+    List<Booking> findByClient_Id(String id);
 }

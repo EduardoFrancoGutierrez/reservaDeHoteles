@@ -9,7 +9,7 @@ public interface BookingRepository extends MongoRepository<Booking, String> {
 
     Booking findById(String id);    
 
-    Booking findTopOrderByIdDesc();   
+    Booking findTopOrderById();   
 
     List<Booking> findByClient_Id(String id);
 }

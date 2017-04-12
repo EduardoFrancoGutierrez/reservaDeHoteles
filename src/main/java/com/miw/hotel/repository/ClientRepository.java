@@ -9,7 +9,7 @@ public interface ClientRepository extends MongoRepository<Client, String>{
 
 	Client findById(String id);
 	
-	Client findTopOrderByIdDesc();
+	Client findTopOrderById();
 	
 	Client findByNif(String nif);
 

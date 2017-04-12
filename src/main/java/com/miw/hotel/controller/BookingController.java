@@ -23,33 +23,17 @@ import com.miw.hotel.utils.MailSender;
 @RequestMapping(value = "/api/books")
 public class BookingController {
 
+	@Autowired
 	RoomRepository roomRepository;
 
+	@Autowired
 	BookingRepository bookRepository;
 	
+	@Autowired
 	ClientRepository clientRepository;
 	
+	@Autowired
 	MailSender mailSender;
-
-	@Autowired
-	public void setBookingRepository(BookingRepository bookRepository) {
-		this.bookRepository = bookRepository;
-	}
-
-	@Autowired
-	public void setRoomRepository(RoomRepository roomRepository) {
-		this.roomRepository = roomRepository;
-	}
-	
-	@Autowired
-	public void setClientRepository(ClientRepository clientRepository) {
-		this.clientRepository = clientRepository;
-	}
-	
-	@Autowired
-	public void setMailSender(MailSender mailSender) {
-		this.mailSender = mailSender;
-	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<Booking> getAllBooks() {
@@ -79,11 +63,11 @@ public class BookingController {
 		}
 		
 		if(clientRepository.findById(booking.getClient().getId()) == null) {
-			booking.getClient().setId(clientRepository.findTopOrderByIdDesc().getId() + 1);
+			booking.getClient().setId(clientRepository.findTopOrderById().getId() + 1);
 			clientRepository.save(booking.getClient());
 		}
 
-		booking.setId(bookRepository.findTopOrderByIdDesc().getId() + 1);
+		booking.setId(bookRepository.findTopOrderById().getId() + 1);
 		bookRepository.save(booking);
 
 	}

@@ -3,8 +3,13 @@ package com.miw.hotel.model;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+
 public class Booking {
 
+	@Id ObjectId databaseId;
+	
 	private int id;
 	
 	private Calendar startDate;
@@ -44,6 +49,12 @@ public class Booking {
 	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
 	}
+	
+	public void setStartDate(long startDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(startDate);
+		this.startDate = c;
+	}
 
 	public Calendar getEndDate() {
 		return endDate;
@@ -51,6 +62,12 @@ public class Booking {
 
 	public void setEndDate(Calendar endDate) {
 		this.endDate = endDate;
+	}
+	
+	public void setEndDate(long endDate) {
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(endDate);
+		this.startDate = c;
 	}
 
 	public Room getRoom() {

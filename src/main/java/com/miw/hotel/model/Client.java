@@ -1,6 +1,11 @@
 package com.miw.hotel.model;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+
 public class Client {
+
+	@Id ObjectId databaseId;
 
 	private int id;
 	

@@ -14,7 +14,7 @@ import com.miw.hotel.model.Status;
 import com.miw.hotel.repository.BookingRepository;
 
 @RestController
-@RequestMapping(value = "/api/bookings")
+@RequestMapping(value = "/api/books")
 public class BookingController {
     @Autowired
     BookingRepository bookRepository;
@@ -26,7 +26,7 @@ public class BookingController {
     }
     
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Booking getBook(@PathVariable(value="id")int id){
+    public Booking getBook(@PathVariable(value="id")Integer id){
         return bookRepository.findById(id);
     }
     

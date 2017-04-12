@@ -14,6 +14,7 @@ import com.miw.hotel.model.Client;
 import com.miw.hotel.model.Status;
 import com.miw.hotel.repository.BookingRepository;
 import com.miw.hotel.repository.ClientRepository;
+import com.miw.hotel.utils.MailSender;
 
 @RestController
 @RequestMapping(value = "/api/books")
@@ -23,6 +24,9 @@ public class BookingController {
     
     @Autowired
     ClientRepository clientRepository;
+    
+    @Autowired
+    public MailSender mailSender;
 
     
     @RequestMapping(value = "", method = RequestMethod.GET)

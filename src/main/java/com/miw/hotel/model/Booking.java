@@ -2,13 +2,8 @@ package com.miw.hotel.model;
 
 import java.util.concurrent.TimeUnit;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-
 public class Booking {
 
-	@Id ObjectId databaseId;
-	
 	private String id;
 	
 	private long startDate;

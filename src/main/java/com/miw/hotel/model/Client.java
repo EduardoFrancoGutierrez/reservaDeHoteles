@@ -2,7 +2,7 @@ package com.miw.hotel.model;
 
 public class Client {
 
-	private int id;
+	private String id;
 	
 	private String name;
 	
@@ -18,7 +18,7 @@ public class Client {
 	
 	public Client(){}
 
-	public Client(int id, String name, String surname, String movil, String email, String address, String nif) {
+	public Client(String id, String name, String surname, String movil, String email, String address, String nif) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -29,11 +29,11 @@ public class Client {
 		this.nif = nif;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -96,7 +96,7 @@ public class Client {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
+//		result = prime * result + id;
 		result = prime * result + ((movil == null) ? 0 : movil.hashCode());
 		result = prime * result + ((nif == null) ? 0 : nif.hashCode());
 		return result;

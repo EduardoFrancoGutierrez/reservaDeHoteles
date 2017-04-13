@@ -3,4 +3,4 @@ angular.module("reservas").service("hotelService", ['requestService',  function(
 	
 	this.findAll = function() {
 		return requestService.request({ method: 'GET', url: '/api/hotels/androoms' });
-}]);
+}}]);

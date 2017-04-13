@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.miw.hotel.exceptions.InvalidBookingException;
 import com.miw.hotel.exceptions.InvalidRoomException;
 import com.miw.hotel.model.Booking;
+import com.miw.hotel.model.Client;
 import com.miw.hotel.model.Status;
 import com.miw.hotel.repository.BookingRepository;
 import com.miw.hotel.repository.ClientRepository;
@@ -32,6 +33,9 @@ public class BookingController {
 	ClientRepository clientRepository;
 	
 	@Autowired
+    ClientRepository hotelRepository;
+	
+	@Autowired
 	MailSender mailSender;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -49,6 +53,14 @@ public class BookingController {
 		Booking booking = bookRepository.findById(id);
 		booking.setStatus(Status.CANCEL.name());
 		bookRepository.save(booking);
+		
+		Client client = clientRepository.findById(booking.getClient().getId());
+		String body = "Sr/Sra " + client.getName() + ":\n Su reserva en el hotel ";
+		body += hotelRepository.findById(roomRepository.findById(booking.getRoom().getId()).getId()).getName();
+		body += " y con código de reserva ";
+		body += booking.getReservationCode();
+		body += " ha sido cancelada.";
+		mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

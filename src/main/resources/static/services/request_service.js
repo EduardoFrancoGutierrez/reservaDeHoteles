@@ -1,4 +1,4 @@
-app.service("requestService", ['$http', '$q', function($http, $q) {
+angular.module("reservas").service("requestService", ['$http', '$q', function($http, $q) {
 	"use strict";
 	
 	this.request = function (config) {

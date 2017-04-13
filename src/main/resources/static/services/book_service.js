@@ -1,4 +1,4 @@
-app.service("bookService", ['requestService',  function(requestService) {
+angular.module("reservas").service("bookService", ['requestService',  function(requestService) {
 	"use strict";
 	
 	this.create = function(book) {

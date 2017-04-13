@@ -82,6 +82,7 @@ public class BookingController {
 		}
 
 		booking.setId(new ObjectId().toString());
+		booking.putTotalPriceBook();
 		bookRepository.save(booking);
 
 	}
@@ -94,4 +95,25 @@ public class BookingController {
         booking.getRoom().setHotel(hotelRepository.findById(booking.getRoom().getHotel().getId()));
         return booking;
     }
+	
+	@RequestMapping(value = "/client/nif/{nifClient}", method = RequestMethod.GET)
+    public double getPriceTotalFromCient(@PathVariable String nifClient) {
+	    List<Booking> listadoBooks= null;
+	    Client client= clientRepository.findByNif(nifClient);
+	    if (client!=null){
+	        listadoBooks=bookRepository.findByClient_id(client.getId());
+	    }
+	    
+	    return this.calculateTotalPriceClient(listadoBooks);
+    }
+	
+	private double calculateTotalPriceClient(List<Booking> books){
+	    double precioTotalCliente= 0.0;
+	    if (books!=null){
+	        for(Booking book: books){
+	            precioTotalCliente+=book.getTotalPrice();
+	        }
+	    }
+	    return precioTotalCliente;
+	}
 }

@@ -10,18 +10,24 @@ angular.module("reservas").config(function($routeProvider) {
 		templateUrl : "templates/home.html",
 		css: "css/home.css"
 	})
+	
 	.when('/books', {
-		templateUrl : "templates/books.html"
+		templateUrl : "templates/hotel_list_to_book.html",
+		controller: "BookController"
 	})
+	
 	.when('/book_room', {
 		templateUrl : "templates/book_room.html"
 	})
+	
 	.when('/cancel_book', {
 		templateUrl : "templates/cancel_book.html"
 	})
+		
 	.when('/error', {
 		templateUrl : "templates/error/404.html"
 	})
+	
 	.otherwise({
 		redirectTo : '/'
 	});

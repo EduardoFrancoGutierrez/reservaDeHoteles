@@ -1,7 +1,13 @@
 package com.miw.hotel.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Client {
 
+	@Id
 	private String id;
 	
 	private String name;
@@ -14,6 +20,7 @@ public class Client {
 	
 	private String address;
 	
+	@Indexed
 	private String nif;
 	
 	public Client(){}

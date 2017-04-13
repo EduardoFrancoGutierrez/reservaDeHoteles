@@ -2,8 +2,13 @@ package com.miw.hotel.model;
 
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Booking {
 
+	@Id
 	private String id;
 	
 	private long startDate;
@@ -15,6 +20,8 @@ public class Booking {
 	private Client client;
 	
 	private String status;
+	
+	private String reservationCode;
 	
 	public Booking() {}
 
@@ -91,56 +98,59 @@ public class Booking {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((client == null) ? 0 : client.hashCode());
-//		result = prime * result + ((endDate == 0) ? 0 : endDate.hashCode());
-//		result = prime * result + id;
-		result = prime * result + ((room == null) ? 0 : room.hashCode());
-//		result = prime * result + ((startDate == 0) ? 0 : startDate.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		return result;
-	}
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((client == null) ? 0 : client.hashCode());
+        result = prime * result + (int) (endDate ^ (endDate >>> 32));
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((reservationCode == null) ? 0 : reservationCode.hashCode());
+        result = prime * result + ((room == null) ? 0 : room.hashCode());
+        result = prime * result + (int) (startDate ^ (startDate >>> 32));
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
+        return result;
+    }
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Booking other = (Booking) obj;
-		if (client == null) {
-			if (other.client != null)
-				return false;
-		} else if (!client.equals(other.client))
-			return false;
-//		if (endDate == null) {
-//			if (other.endDate != null)
-//				return false;
-//		} 
-//		else 
-			if (endDate != other.endDate)
-			return false;
-		if (id != other.id)
-			return false;
-		if (room == null) {
-			if (other.room != null)
-				return false;
-		} else if (!room.equals(other.room))
-			return false;
-//		if (startDate == null) {
-//			if (other.startDate != null)
-//				return false;
-//		} else 
-		if (startDate !=other.startDate)
-			return false;
-		if (status != other.status)
-			return false;
-		return true;
-	}
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Booking other = (Booking) obj;
+        if (client == null) {
+            if (other.client != null)
+                return false;
+        } else if (!client.equals(other.client))
+            return false;
+        if (endDate != other.endDate)
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (reservationCode == null) {
+            if (other.reservationCode != null)
+                return false;
+        } else if (!reservationCode.equals(other.reservationCode))
+            return false;
+        if (room == null) {
+            if (other.room != null)
+                return false;
+        } else if (!room.equals(other.room))
+            return false;
+        if (startDate != other.startDate)
+            return false;
+        if (status == null) {
+            if (other.status != null)
+                return false;
+        } else if (!status.equals(other.status))
+            return false;
+        return true;
+    }
 
 	public boolean valid() {
 		if(this.startDate ==  this.endDate)
@@ -152,6 +162,14 @@ public class Booking {
 				
 		return true;
 	}
+
+    public String getReservationCode() {
+        return reservationCode;
+    }
+
+    public void setReservationCode(String reservationCode) {
+        this.reservationCode = reservationCode;
+    }
 
 	
 	

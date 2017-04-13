@@ -3,6 +3,9 @@
   "dependencies": {
     "angular": "1.6.4",
     "bootstrap": "^3.3.7",
-    "angular-route": "^1.6.4"
+    "angular-route": "^1.6.4",
+    "bootstrap-datepicker": "^1.6.4",
+    "angular-bootstrap-datetimepicker": "^1.1.4",
+    "angular-date-time-input": "^1.2.1"
   }
 }

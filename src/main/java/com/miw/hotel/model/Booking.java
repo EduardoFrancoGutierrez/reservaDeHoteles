@@ -23,7 +23,11 @@ public class Booking {
 	
 	private String reservationCode;
 	
-	public Booking() {}
+	private double totalPrice;
+	
+	public Booking() {
+		this.status = Status.BOOKING.name();
+	}
 
 	public Booking(String id, long startDate, long endDate, Room room, Client client) {
 		super();
@@ -33,6 +37,7 @@ public class Booking {
 		this.room = room;
 		this.client = client;
 		this.status = Status.BOOKING.name();
+		this.totalPrice = 0.0;
 	}
 
 	public String getId() {
@@ -91,13 +96,21 @@ public class Booking {
 		return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
 	}
 
-	@Override
-	public String toString() {
-		return "Booking {id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", room=" + room
-				+ ", client=" + client + ", status=" + status + "}";
-	}
+    public double getTotalPrice() {
+        return totalPrice;
+    }
 
-	@Override
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking {id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", room=" + room + ", client=" + client
+                + ", status=" + status + ", totalPrice=" + totalPrice + "}";
+    }
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -108,10 +121,13 @@ public class Booking {
         result = prime * result + ((room == null) ? 0 : room.hashCode());
         result = prime * result + (int) (startDate ^ (startDate >>> 32));
         result = prime * result + ((status == null) ? 0 : status.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(totalPrice);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
-	@Override
+    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -149,11 +165,14 @@ public class Booking {
                 return false;
         } else if (!status.equals(other.status))
             return false;
+        if (Double.doubleToLongBits(totalPrice) != Double.doubleToLongBits(other.totalPrice))
+            return false;
         return true;
     }
 
+
 	public boolean valid() {
-		if(this.startDate ==  this.endDate)
+		if(this.startDate == this.endDate)
 			return false;
 		if(this.room == null)
 			return false;
@@ -173,7 +192,5 @@ public class Booking {
 
 	
 	
-	
-	
-	
+
 }

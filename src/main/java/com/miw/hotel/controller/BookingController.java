@@ -96,7 +96,7 @@ public class BookingController {
         return booking;
     }
 	
-	@RequestMapping(value = "/client/nif/{nifClient}", method = RequestMethod.GET)
+	@RequestMapping(value = "/price/nif/{nifClient}", method = RequestMethod.GET)
     public double getPriceTotalFromCient(@PathVariable String nifClient) {
 	    List<Booking> listadoBooks= null;
 	    Client client= clientRepository.findByNif(nifClient);

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.miw.hotel.exceptions.InvalidBookingException;
 import com.miw.hotel.exceptions.InvalidRoomException;
 import com.miw.hotel.model.Booking;
-import com.miw.hotel.model.Client;
 import com.miw.hotel.model.Status;
 import com.miw.hotel.repository.BookingRepository;
 import com.miw.hotel.repository.ClientRepository;
@@ -72,9 +71,8 @@ public class BookingController {
 
 	}
 	
-	@RequestMapping(value = "/client/{nif}", method = RequestMethod.GET)
-    public List<Booking> getAllBooksByClientNif(@PathVariable String nif){
-        Client client = clientRepository.findByNif(nif);
-        return bookRepository.findByClient_Id(client.getId());
+	@RequestMapping(value = "/client/{reservationCode}", method = RequestMethod.GET)
+    public List<Booking> getAllBooksByClientNif(@PathVariable String reservationCode){
+        return bookRepository.findByReservationCode(reservationCode);
     }
 }

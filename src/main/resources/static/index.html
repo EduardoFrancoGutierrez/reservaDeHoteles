@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport"
+	content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+<link rel="stylesheet"
+	href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+<link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row navigationBar">
+			<div class="col-md-12">
+				<div id="logoContainer">
+					<a href="https://www.upm.es"> <img id="logo" alt="ETSISI Icon"
+						src="img/icon.png" class="img-rounded smallRightMargin" />
+					</a> <span id="logoTitle">Book Rooms</span>
+				</div>
+				<ul class="nav nav-pills">
+					<li><a ng-href="#!/">Home</a></li>
+					<li><a ng-href="#!/books/">Reservas</a></li>
+					<li><a ng-href="#!/book_room">Hacer Reserva</a></li>
+					<li><a ng-href="#!/cancel_book">Cancelar Reserva</a></li>
+				</ul>
+			</div>
+		</div>
+		<section ng-view></section>
+	</div>
+
+	<script src="bower_components/angular/angular.min.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/angular-css/angular-css.min.js"></script>
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+	<script src="app.js"></script>
+	<script src="routes/routes.js"></script>
+
+	<script src="services/request_service.js"></script>
+	<script src="services/hotel_service.js"></script>
+	<script src="services/book_service.js"></script>
+
+	<script src="controllers/book_controller.js"></script>
+
+</body>
+</html>

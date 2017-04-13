@@ -23,7 +23,9 @@ public class Booking {
 	
 	private String reservationCode;
 	
-	public Booking() {}
+	public Booking() {
+		this.status = Status.BOOKING.name();
+	}
 
 	public Booking(String id, long startDate, long endDate, Room room, Client client) {
 		super();
@@ -153,7 +155,7 @@ public class Booking {
     }
 
 	public boolean valid() {
-		if(this.startDate ==  this.endDate)
+		if(this.startDate == this.endDate)
 			return false;
 		if(this.room == null)
 			return false;

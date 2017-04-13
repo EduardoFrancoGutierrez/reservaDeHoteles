@@ -1,5 +1,6 @@
 package com.miw.hotel.model;
 
+import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.annotation.Id;
@@ -7,6 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Booking {
+
+    private static final int SECONDS_HOUR = 3600;
 
     @Id
     private String id;
@@ -48,6 +51,15 @@ public class Booking {
             return false;
 
         return true;
+    }
+    
+    public void putTotalPriceBook(){  
+       if ((this.startDate<this.endDate)&&(this.room!=null)&&(this.room.getPricePerHour()!=null)){
+           long secs = (this.endDate - this.startDate) / 1000;
+           long priceCaluclate= (this.room.getPricePerHour().longValue()*secs)/SECONDS_HOUR;
+           this.setTotalPrice(priceCaluclate);
+       }
+           
     }
 
     public String getId() {

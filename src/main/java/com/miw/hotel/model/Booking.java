@@ -8,96 +8,127 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Booking {
 
-	@Id
-	private String id;
-	
-	private long startDate;
-	
-	private long endDate;
-	
-	private Room room; 
-	
-	private Client client;
-	
-	private String status;
-	
-	private String reservationCode;
-	
-	public Booking() {}
+    @Id
+    private String id;
 
-	public Booking(String id, long startDate, long endDate, Room room, Client client) {
-		super();
-		this.id = id;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.room = room;
-		this.client = client;
-		this.status = Status.BOOKING.name();
-	}
+    private long startDate;
 
-	public String getId() {
-		return id;
-	}
+    private long endDate;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    private Room room;
 
-	public long getStartDate() {
-		return startDate;
-	}
+    private Client client;
 
-	public void setStartDate(long startDate) {
-		this.startDate = startDate;
-	}
-	
-	public long getEndDate() {
-		return endDate;
-	}
+    private String status;
 
-	public void setEndDate(long endDate) {
-		this.endDate = endDate;
-	}
-	
-	public Room getRoom() {
-		return room;
-	}
+    private String reservationCode;
 
-	public void setRoom(Room room) {
-		this.room = room;
-	}
+    private double totalPrice;
 
-	public Client getClient() {
-		return client;
-	}
+    public Booking() {
+    }
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
+    public Booking(String id, long startDate, long endDate, Room room, Client client) {
+        super();
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.room = room;
+        this.client = client;
+        this.status = Status.BOOKING.name();
+        this.totalPrice = 0.0;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public boolean valid() {
+        if (this.startDate == this.endDate)
+            return false;
+        if (this.room == null)
+            return false;
+        if (this.client == null)
+            return false;
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	public boolean isBook() {
-		return this.status.equals(Status.BOOKING.name());
-	}
-	
-	public long getDuration() {
-		return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
-	}
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "Booking {id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", room=" + room
-				+ ", client=" + client + ", status=" + status + "}";
-	}
+    public String getId() {
+        return id;
+    }
 
-	@Override
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(long startDate) {
+        this.startDate = startDate;
+    }
+
+    public long getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(long endDate) {
+        this.endDate = endDate;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isBook() {
+        return this.status.equals(Status.BOOKING.name());
+    }
+
+    public long getDuration() {
+        return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String getReservationCode() {
+        return reservationCode;
+    }
+
+    public void setReservationCode(String reservationCode) {
+        this.reservationCode = reservationCode;
+    }
+
+    @Override
+    public String toString() {
+        return "Booking {id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", room=" + room + ", client=" + client
+                + ", status=" + status + ", totalPrice=" + totalPrice + "}";
+    }
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -108,10 +139,13 @@ public class Booking {
         result = prime * result + ((room == null) ? 0 : room.hashCode());
         result = prime * result + (int) (startDate ^ (startDate >>> 32));
         result = prime * result + ((status == null) ? 0 : status.hashCode());
+        long temp;
+        temp = Double.doubleToLongBits(totalPrice);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
 
-	@Override
+    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -149,31 +183,9 @@ public class Booking {
                 return false;
         } else if (!status.equals(other.status))
             return false;
+        if (Double.doubleToLongBits(totalPrice) != Double.doubleToLongBits(other.totalPrice))
+            return false;
         return true;
     }
 
-	public boolean valid() {
-		if(this.startDate ==  this.endDate)
-			return false;
-		if(this.room == null)
-			return false;
-		if(this.client == null)
-			return false;
-				
-		return true;
-	}
-
-    public String getReservationCode() {
-        return reservationCode;
-    }
-
-    public void setReservationCode(String reservationCode) {
-        this.reservationCode = reservationCode;
-    }
-
-	
-	
-	
-	
-	
 }

@@ -85,7 +85,11 @@ public class BookingController {
 	}
 	
 	@RequestMapping(value = "/client/{reservationCode}", method = RequestMethod.GET)
-    public List<Booking> getAllBooksByClientNif(@PathVariable String reservationCode){
-        return bookRepository.findByReservationCode(reservationCode);
+    public Booking getBookByReservationCode(@PathVariable String reservationCode){
+        Booking booking = bookRepository.findByReservationCode(reservationCode);
+        booking.setClient(clientRepository.findById(booking.getClient().getId()));
+        booking.setRoom(roomRepository.findById(booking.getRoom().getId()));
+        booking.getRoom().setHotel(hotelRepository.findById(booking.getRoom().getHotel().getId()));
+        return booking;
     }
 }

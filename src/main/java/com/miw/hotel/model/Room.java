@@ -10,7 +10,7 @@ public class Room {
 	
 	private BigDecimal pricePerHour;
 	
-	private RoomType type;
+	private String type;
 	
 	public Room() {}
 
@@ -19,7 +19,7 @@ public class Room {
 		this.id = id;
 		this.hotel = hotel;
 		this.pricePerHour = pricePerHour;
-		this.type = type;
+		this.type = type.name();
 	}
 
 	public String getId() {
@@ -46,11 +46,11 @@ public class Room {
 		this.pricePerHour = pricePerHour;
 	}
 
-	public RoomType getType() {
+	public String getType() {
 		return type;
 	}
 
-	public void setType(RoomType type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 

@@ -16,6 +16,7 @@ import com.miw.hotel.model.Client;
 import com.miw.hotel.model.Status;
 import com.miw.hotel.repository.BookingRepository;
 import com.miw.hotel.repository.ClientRepository;
+import com.miw.hotel.repository.HotelRepository;
 import com.miw.hotel.repository.RoomRepository;
 import com.miw.hotel.utils.MailSender;
 
@@ -33,7 +34,7 @@ public class BookingController {
 	ClientRepository clientRepository;
 	
 	@Autowired
-    ClientRepository hotelRepository;
+    HotelRepository hotelRepository;
 	
 	@Autowired
 	MailSender mailSender;
@@ -55,11 +56,11 @@ public class BookingController {
 		bookRepository.save(booking);
 		
 		Client client = clientRepository.findById(booking.getClient().getId());
-		String body = "Sr/Sra " + client.getName() + ":\n Su reserva en el hotel ";
-		body += hotelRepository.findById(roomRepository.findById(booking.getRoom().getId()).getId()).getName();
+		String body = "Sr/Sra " + client.getName() + ":\n\nSu reserva en el hotel ";
+		body += hotelRepository.findById(roomRepository.findById(booking.getRoom().getId()).getHotel().getId()).getName();
 		body += " y con código de reserva ";
 		body += booking.getReservationCode();
-		body += " ha sido cancelada.";
+		body += " ha sido cancelada.\n\nReciba un cordial saludo.";
 		mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
 	}
 

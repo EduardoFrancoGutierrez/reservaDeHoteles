@@ -2,6 +2,7 @@ package com.miw.hotel.controller;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,6 +67,7 @@ public class BookingController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public void createBook(@RequestBody Booking booking) throws InvalidRoomException, InvalidBookingException {
+		
 		if (!booking.valid()) {
 			throw new InvalidBookingException();
 		}
@@ -73,13 +75,13 @@ public class BookingController {
 		if (roomRepository.findById(booking.getRoom().getId()) == null) {
 			throw new InvalidRoomException();
 		}
-		
-		if(clientRepository.findById(booking.getClient().getId()) == null) {
-			booking.getClient().setId(clientRepository.findTopOrderById().getId() + 1);
+
+		if(clientRepository.findByNif(booking.getClient().getNif()) == null) {
+			booking.getClient().setId(new ObjectId().toString());
 			clientRepository.save(booking.getClient());
 		}
 
-		booking.setId(bookRepository.findTopOrderById().getId() + 1);
+		booking.setId(new ObjectId().toString());
 		bookRepository.save(booking);
 
 	}

@@ -5,7 +5,7 @@
 
 var mainApplicationModuleName = 'reservas';
 
-angular.module(mainApplicationModuleName, ['ngRoute', 'angularCSS']);
+angular.module(mainApplicationModuleName, ['ngRoute', 'angularCSS', 'ui.bootstrap.datetimepicker', 'ui.dateTimeInput']);
 
 angular.element(document).ready(function () {
     angular.bootstrap(document, [mainApplicationModuleName]);

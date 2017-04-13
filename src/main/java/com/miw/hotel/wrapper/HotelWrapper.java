@@ -21,8 +21,8 @@ public class HotelWrapper {
 		this.name = name;
 		this.image = image;		
 		this.rooms = rooms;
-		for(Room room : rooms) {
-			if(room.getPricePerHour().compareTo(minPrice) > 0){
+		for(Room room : rooms) {			
+			if(room.getPricePerHour().compareTo(minPrice) < 0 || minPrice.equals(BigDecimal.ZERO)){
 				minPrice = room.getPricePerHour();
 			}
 		}

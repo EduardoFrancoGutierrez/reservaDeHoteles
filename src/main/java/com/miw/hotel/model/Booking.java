@@ -8,103 +8,93 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Booking {
 
-    @Id
-    private String id;
+	@Id
+	private String id;
+	
+	private long startDate;
+	
+	private long endDate;
+	
+	private Room room; 
+	
+	private Client client;
+	
+	private String status;
+	
+	private String reservationCode;
+	
+	private double totalPrice;
+	
+	public Booking() {
+		this.status = Status.BOOKING.name();
+	}
 
-    private long startDate;
+	public Booking(String id, long startDate, long endDate, Room room, Client client) {
+		super();
+		this.id = id;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.room = room;
+		this.client = client;
+		this.status = Status.BOOKING.name();
+		this.totalPrice = 0.0;
+	}
 
-    private long endDate;
+	public String getId() {
+		return id;
+	}
 
-    private Room room;
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    private Client client;
+	public long getStartDate() {
+		return startDate;
+	}
 
-    private String status;
+	public void setStartDate(long startDate) {
+		this.startDate = startDate;
+	}
+	
+	public long getEndDate() {
+		return endDate;
+	}
 
-    private String reservationCode;
+	public void setEndDate(long endDate) {
+		this.endDate = endDate;
+	}
+	
+	public Room getRoom() {
+		return room;
+	}
 
-    private double totalPrice;
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 
-    public Booking() {
-    }
+	public Client getClient() {
+		return client;
+	}
 
-    public Booking(String id, long startDate, long endDate, Room room, Client client) {
-        super();
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.room = room;
-        this.client = client;
-        this.status = Status.BOOKING.name();
-        this.totalPrice = 0.0;
-    }
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
-    public boolean valid() {
-        if (this.startDate == this.endDate)
-            return false;
-        if (this.room == null)
-            return false;
-        if (this.client == null)
-            return false;
+	public String getStatus() {
+		return status;
+	}
 
-        return true;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public long getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(long startDate) {
-        this.startDate = startDate;
-    }
-
-    public long getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(long endDate) {
-        this.endDate = endDate;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public boolean isBook() {
-        return this.status.equals(Status.BOOKING.name());
-    }
-
-    public long getDuration() {
-        return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	public boolean isBook() {
+		return this.status.equals(Status.BOOKING.name());
+	}
+	
+	public long getDuration() {
+		return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
+	}
 
     public double getTotalPrice() {
         return totalPrice;
@@ -112,14 +102,6 @@ public class Booking {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public String getReservationCode() {
-        return reservationCode;
-    }
-
-    public void setReservationCode(String reservationCode) {
-        this.reservationCode = reservationCode;
     }
 
     @Override
@@ -187,5 +169,28 @@ public class Booking {
             return false;
         return true;
     }
+
+
+	public boolean valid() {
+		if(this.startDate == this.endDate)
+			return false;
+		if(this.room == null)
+			return false;
+		if(this.client == null)
+			return false;
+				
+		return true;
+	}
+
+    public String getReservationCode() {
+        return reservationCode;
+    }
+
+    public void setReservationCode(String reservationCode) {
+        this.reservationCode = reservationCode;
+    }
+
+	
+	
 
 }

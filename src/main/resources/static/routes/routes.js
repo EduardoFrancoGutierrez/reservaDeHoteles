@@ -21,7 +21,9 @@ angular.module("reservas").config(function($routeProvider) {
 	})
 	
 	.when('/cancel_book', {
-		templateUrl : "templates/cancel_book.html"
+		templateUrl : "templates/cancel_book.html",
+		controller: "CancelController",
+		controllerAs: "vm"
 	})
 		
 	.when('/error', {

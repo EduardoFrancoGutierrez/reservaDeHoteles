@@ -8,4 +8,6 @@ import com.miw.hotel.model.Hotel;
 public interface HotelRepository extends MongoRepository<Hotel, String> {
 
     public Hotel findByName(String name);
+    
+    public Hotel findById(String id);
 }

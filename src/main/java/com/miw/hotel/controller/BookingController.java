@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.miw.hotel.exceptions.InvalidBookingException;
 import com.miw.hotel.exceptions.InvalidRoomException;
 import com.miw.hotel.model.Booking;
+import com.miw.hotel.model.Client;
 import com.miw.hotel.model.Status;
 import com.miw.hotel.repository.BookingRepository;
 import com.miw.hotel.repository.ClientRepository;
+import com.miw.hotel.repository.HotelRepository;
 import com.miw.hotel.repository.RoomRepository;
 import com.miw.hotel.utils.MailSender;
 
@@ -31,6 +33,9 @@ public class BookingController {
 	
 	@Autowired
 	ClientRepository clientRepository;
+	
+	@Autowired
+    HotelRepository hotelRepository;
 	
 	@Autowired
 	MailSender mailSender;
@@ -50,6 +55,14 @@ public class BookingController {
 		Booking booking = bookRepository.findById(id);
 		booking.setStatus(Status.CANCEL.name());
 		bookRepository.save(booking);
+		
+		Client client = clientRepository.findById(booking.getClient().getId());
+		String body = "Sr/Sra " + client.getName() + ":\n\nSu reserva en el hotel ";
+		body += hotelRepository.findById(roomRepository.findById(booking.getRoom().getId()).getHotel().getId()).getName();
+		body += " y con código de reserva ";
+		body += booking.getReservationCode();
+		body += " ha sido cancelada.\n\nReciba un cordial saludo.";
+		mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -74,7 +87,11 @@ public class BookingController {
 	}
 	
 	@RequestMapping(value = "/client/{reservationCode}", method = RequestMethod.GET)
-    public List<Booking> getAllBooksByClientNif(@PathVariable String reservationCode){
-        return bookRepository.findByReservationCode(reservationCode);
+    public Booking getBookByReservationCode(@PathVariable String reservationCode){
+        Booking booking = bookRepository.findByReservationCode(reservationCode);
+        booking.setClient(clientRepository.findById(booking.getClient().getId()));
+        booking.setRoom(roomRepository.findById(booking.getRoom().getId()));
+        booking.getRoom().setHotel(hotelRepository.findById(booking.getRoom().getHotel().getId()));
+        return booking;
     }
 }

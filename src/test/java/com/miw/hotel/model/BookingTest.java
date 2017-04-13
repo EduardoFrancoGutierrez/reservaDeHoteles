@@ -51,7 +51,7 @@ public class BookingTest {
 	public void testEqualsObject() {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.HOUR_OF_DAY, (int) BOOKING_DURATION);
-		assertEquals(booking, new Booking(1+"", Calendar.getInstance().getTimeInMillis(), cal.getTimeInMillis(), room, client));
+		assertEquals(booking, new Booking(1+"", booking.getStartDate(), booking.getEndDate(), room, client));
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		assertNotEquals(booking, new Booking(1+"", Calendar.getInstance().getTimeInMillis(), cal.getTimeInMillis(), room, client));
 	}

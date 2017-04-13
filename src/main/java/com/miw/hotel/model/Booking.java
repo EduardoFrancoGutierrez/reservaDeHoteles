@@ -1,6 +1,5 @@
 package com.miw.hotel.model;
 
-import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.data.annotation.Id;
@@ -9,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Booking {
 
-    private static final int SECONDS_HOUR = 3600;
+    private static final long SECONDS_HOUR = 3600;
 
     @Id
     private String id;
@@ -29,6 +28,7 @@ public class Booking {
     private double totalPrice;
 
     public Booking() {
+        this.status = Status.BOOKING.name();
     }
 
     public Booking(String id, long startDate, long endDate, Room room, Client client) {
@@ -40,26 +40,6 @@ public class Booking {
         this.client = client;
         this.status = Status.BOOKING.name();
         this.totalPrice = 0.0;
-    }
-
-    public boolean valid() {
-        if (this.startDate == this.endDate)
-            return false;
-        if (this.room == null)
-            return false;
-        if (this.client == null)
-            return false;
-
-        return true;
-    }
-    
-    public void putTotalPriceBook(){  
-       if ((this.startDate<this.endDate)&&(this.room!=null)&&(this.room.getPricePerHour()!=null)){
-           long secs = (this.endDate - this.startDate) / 1000;
-           long priceCaluclate= (this.room.getPricePerHour().longValue()*secs)/SECONDS_HOUR;
-           this.setTotalPrice(priceCaluclate);
-       }
-           
     }
 
     public String getId() {
@@ -126,14 +106,6 @@ public class Booking {
         this.totalPrice = totalPrice;
     }
 
-    public String getReservationCode() {
-        return reservationCode;
-    }
-
-    public void setReservationCode(String reservationCode) {
-        this.reservationCode = reservationCode;
-    }
-
     @Override
     public String toString() {
         return "Booking {id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", room=" + room + ", client=" + client
@@ -198,6 +170,34 @@ public class Booking {
         if (Double.doubleToLongBits(totalPrice) != Double.doubleToLongBits(other.totalPrice))
             return false;
         return true;
+    }
+
+    public boolean valid() {
+        if (this.startDate == this.endDate)
+            return false;
+        if (this.room == null)
+            return false;
+        if (this.client == null)
+            return false;
+
+        return true;
+    }
+
+    public void putTotalPriceBook(){  
+        if ((this.startDate<this.endDate)&&(this.room!=null)&&(this.room.getPricePerHour()!=null)){
+            long secs = (this.endDate - this.startDate) / 1000;
+            long priceCaluclate= (this.room.getPricePerHour().longValue()*secs)/SECONDS_HOUR;
+            this.setTotalPrice(priceCaluclate);
+        }
+            
+     }
+    
+    public String getReservationCode() {
+        return reservationCode;
+    }
+
+    public void setReservationCode(String reservationCode) {
+        this.reservationCode = reservationCode;
     }
 
 }

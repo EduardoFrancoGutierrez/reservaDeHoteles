@@ -12,8 +12,9 @@ angular.module("reservas").config(function($routeProvider) {
 	})
 	
 	.when('/books', {
-		templateUrl : "templates/hotel_list_to_book.html",
-		controller: "BookController"
+		templateUrl : "templates/books.html",
+		controller: "BooksController",
+		css: "css/books.css"
 	})
 	
 	.when('/book_room', {

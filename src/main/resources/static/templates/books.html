@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<section ng-controller="BooksController as vm" ng-init="vm.getHotels()">
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 formContainer">
+			<fieldset class="formBorder">
+				<legend class="formLegend">Buscar Reservas</legend>
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="listType" class="col-sm-1 control-label">Hotel:
+						</label>
+						<div class="col-sm-11">
+							<select ng-model="vm.hotel"
+								ng-change="vm.getBooks()"
+								class="form-control" id="hotel" required="required">
+								<option ng-repeat="hotelWrapper in vm.hotels"
+									value="{{hotelWrapper.id}}">{{hotelWrapper.name}}</option>
+									<option value="1">1</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group text-center">
+						<span class="error">{{listUsersController.error}}</span>
+					</div>
+				</form>
+			</fieldset>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 formContainer">
+			<fieldset class="formBorder">
+				<legend class="formLegend">Output</legend>
+				<table class="table table-bordered centerText">
+					<thead>
+						<tr class="active">
+							<th class="centerText">C&oacute;digo reserva</th>
+							<th class="centerText">Fecha entrada</th>
+							<th class="centerText">Fecha salida</th>
+							<th class="centerText">Precio total</th>
+							<th class="centerText">Estado</th>
+							<th class="centerText">Habitaci&oacute;n ID</th>
+							<th class="centerText">Cliente</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="book in vm.books">
+						<tr class="success">
+							<td>{{book.reservationCode}}</td>
+							<td>{{book.startDate | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+							<td>{{book.endDate | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+							<td>{{book.totalPrice}} &euro;</td>
+							<td>{{book.status}}</td>
+							<td>{{book.room._id.$oid}}</td>
+							<td>{{book.client._id.$oid}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	<br /> <br />
+</section>

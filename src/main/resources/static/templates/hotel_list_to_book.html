@@ -1,10 +1,11 @@
-<div ng-controller="HomeController as vm">
+<div ng-controller="BookController as vm">
 
 	<div class="well">
 		<div class="row">Filtro</div>
 	</div>
 
 	<div class="panel panel-default" ng-repeat="hotel in vm.hotels">
+		{{hotel.showRooms = false}}
 		<div class="panel-heading">{{hotel.name}}</div>
 		<div class="panel-body">
 			<div class="row">
@@ -12,16 +13,16 @@
 					<img src="{{hotel.image}}" alt="{{hotel.name}}" class="img-responsive img-rounded">
 				</div>
 				<div class="col-md-10">
-					<h3>Desde {{hotel.minPrice}} €/hora</h3>
+					<h3>Desde {{hotel.minPrice}} â‚¬/hora</h3>
 					
-					<button type="button" class="btn btn-default" ng-click="vm.showRooms(hotel)">Ver habitaciones</button>
+<!-- 					<button type="button" class="btn btn-default" ng-click="hotel.showRooms = true" ng-hide="hotel.showRooms">Ver habitaciones</button> -->
 				</div>
 			</div>
-			<div class="row">
+			<div class="row"> 
 				<table class="table table-striped">
 				  	<thead>
 					  	<tr>
-					  		<th> Tipo habitación </th>
+					  		<th> Tipo habitaciÃ³n </th>
 					  		<th> Precio </th>
 					  		<th></th>
 					  	</tr>				  		
@@ -29,7 +30,7 @@
 				  	<tbody>
 				  		<tr ng-repeat="room in hotel.rooms">
 				  			<td>{{room.type}}</td>
-				  			<td>{{room.pricePerHour}} €</td>
+				  			<td>{{room.pricePerHour}} â‚¬</td>
 				  			<td><button type="button" class="btn btn-primary" ng-click="vm.bookRoom(room)">Reservar</button>
 				  		</tr>
 				  	</tbody>

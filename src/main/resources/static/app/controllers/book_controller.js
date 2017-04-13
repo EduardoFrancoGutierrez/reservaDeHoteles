@@ -16,4 +16,8 @@ app.controller("BookController", ['hotelService', 'bookService', function(hotelS
 	vm.greeting = 'Hola!';
 	
 	vm.getHotels();
+	
+	vm.showRooms = function(hotel) {
+		hotel.showRooms = true;
+	}
 }]);

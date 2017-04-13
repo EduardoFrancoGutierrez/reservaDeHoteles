@@ -34,7 +34,7 @@ public class RoomTest {
 		assertEquals(1564782+"", room1.getId());
 		assertEquals(hotel1, room1.getHotel());
 		assertEquals(new BigDecimal(12), room1.getPricePerHour());
-		assertEquals(RoomType.INDIVIDUAL, room1.getType());
+		assertEquals(RoomType.INDIVIDUAL.name(), room1.getType());
 	}
 
 	@Test

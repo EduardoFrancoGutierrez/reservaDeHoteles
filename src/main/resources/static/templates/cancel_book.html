@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<section>
+    <br/>
+    <div class="container">
+        <form>
+			<div class="form-group row">
+		      <label for="reservationCodeInput" class="col-sm-2 col-form-label">Código de reserva</label>
+		      <div class="col-sm-10">
+		        <input ng-model="vm.code" type="text" class="form-control" id="reservationCodeInput" placeholder="Introduzca código de reserva">
+		      </div>
+		    </div>
+		    <div class="form-group row">
+		      <div class="offset-sm-2 col-sm-10">
+		        <button type="submit" class="btn btn-primary" ng-click="vm.getBook(vm.code)">Enviar</button>
+		      </div>
+		    </div>
+        </form>
+    </div>
+</section>

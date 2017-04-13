@@ -1,0 +1,41 @@
+/* CSS styles for "home.html" template */
+
+.carouselImage {
+    height: 450px !important;
+    width: 100%;
+}
+
+#pageName {
+    font-size: xx-large;
+    color: black;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+#mainLogo {
+    margin: 0 auto;
+    height: 100px;
+    width: 100px;
+}
+
+.columnHeader {
+    width: 100%;
+    text-align: center;
+    border: 1px solid #9B6B22;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #FF7400;
+}
+
+.columnsContainer {
+    padding: 0;
+    margin: 0;
+}
+
+.justify {
+    text-align: justify;
+}

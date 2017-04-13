@@ -3,8 +3,8 @@ app.config(function ($routeProvider) {
 	
 	$routeProvider
 		.when('/', { 
-			templateUrl : "templates/index.html",
-			controller: "HomeController"
+			templateUrl : "templates/hotel_list_to_book.html",
+			controller: "BookController"
 		})
 		
 		.when('/error', { 

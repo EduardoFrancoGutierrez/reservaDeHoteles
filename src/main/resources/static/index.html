@@ -64,8 +64,7 @@
 	  </div><!-- /.container-fluid -->
 	</nav>
 	
-	
-	<div ng-view></div>
+	<div class="container" ng-view></div>
 	
 	
 	<script src="bower_components/angular/angular.min.js"></script>
@@ -76,7 +75,11 @@
 	<script src="app/app.js"></script>
     <script src="app/routeconfig.js"></script>
     
-	<script src="app/controllers/home_controller.js"></script>
+    <script src="app/services/request_service.js"></script>
+    <script src="app/services/hotel_service.js"></script>
+    <script src="app/services/book_service.js"></script>
+    
+	<script src="app/controllers/book_controller.js"></script>
 	
 	
 </body>

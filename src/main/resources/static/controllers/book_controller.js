@@ -1,4 +1,4 @@
-app.controller("BookController", ['hotelService', 'bookService', function(hotelService, bookService) {
+angular.module("reservas").controller("BookController", ['hotelService', 'bookService', function(hotelService, bookService) {
 	var vm = this;
 	
 	vm.hotels = [];

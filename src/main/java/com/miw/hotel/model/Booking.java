@@ -142,6 +142,17 @@ public class Booking {
 		return true;
 	}
 
+	public boolean valid() {
+		if(this.startDate ==  this.endDate)
+			return false;
+		if(this.room == null)
+			return false;
+		if(this.client == null)
+			return false;
+				
+		return true;
+	}
+
 	
 	
 	

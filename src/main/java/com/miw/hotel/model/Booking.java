@@ -8,93 +8,95 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Booking {
 
-	@Id
-	private String id;
-	
-	private long startDate;
-	
-	private long endDate;
-	
-	private Room room; 
-	
-	private Client client;
-	
-	private String status;
-	
-	private String reservationCode;
-	
-	private double totalPrice;
-	
-	public Booking() {
-		this.status = Status.BOOKING.name();
-	}
+    private static final long SECONDS_HOUR = 3600;
 
-	public Booking(String id, long startDate, long endDate, Room room, Client client) {
-		super();
-		this.id = id;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.room = room;
-		this.client = client;
-		this.status = Status.BOOKING.name();
-		this.totalPrice = 0.0;
-	}
+    @Id
+    private String id;
 
-	public String getId() {
-		return id;
-	}
+    private long startDate;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    private long endDate;
 
-	public long getStartDate() {
-		return startDate;
-	}
+    private Room room;
 
-	public void setStartDate(long startDate) {
-		this.startDate = startDate;
-	}
-	
-	public long getEndDate() {
-		return endDate;
-	}
+    private Client client;
 
-	public void setEndDate(long endDate) {
-		this.endDate = endDate;
-	}
-	
-	public Room getRoom() {
-		return room;
-	}
+    private String status;
 
-	public void setRoom(Room room) {
-		this.room = room;
-	}
+    private String reservationCode;
 
-	public Client getClient() {
-		return client;
-	}
+    private double totalPrice;
 
-	public void setClient(Client client) {
-		this.client = client;
-	}
+    public Booking() {
+        this.status = Status.BOOKING.name();
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public Booking(String id, long startDate, long endDate, Room room, Client client) {
+        super();
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.room = room;
+        this.client = client;
+        this.status = Status.BOOKING.name();
+        this.totalPrice = 0.0;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	public boolean isBook() {
-		return this.status.equals(Status.BOOKING.name());
-	}
-	
-	public long getDuration() {
-		return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
-	}
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(long startDate) {
+        this.startDate = startDate;
+    }
+
+    public long getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(long endDate) {
+        this.endDate = endDate;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isBook() {
+        return this.status.equals(Status.BOOKING.name());
+    }
+
+    public long getDuration() {
+        return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
+    }
 
     public double getTotalPrice() {
         return totalPrice;
@@ -170,18 +172,26 @@ public class Booking {
         return true;
     }
 
+    public boolean valid() {
+        if (this.startDate == this.endDate)
+            return false;
+        if (this.room == null)
+            return false;
+        if (this.client == null)
+            return false;
 
-	public boolean valid() {
-		if(this.startDate == this.endDate)
-			return false;
-		if(this.room == null)
-			return false;
-		if(this.client == null)
-			return false;
-				
-		return true;
-	}
+        return true;
+    }
 
+    public void putTotalPriceBook(){  
+        if ((this.startDate<this.endDate)&&(this.room!=null)&&(this.room.getPricePerHour()!=null)){
+            long secs = (this.endDate - this.startDate) / 1000;
+            long priceCaluclate= (this.room.getPricePerHour().longValue()*secs)/SECONDS_HOUR;
+            this.setTotalPrice(priceCaluclate);
+        }
+            
+     }
+    
     public String getReservationCode() {
         return reservationCode;
     }
@@ -189,8 +199,5 @@ public class Booking {
     public void setReservationCode(String reservationCode) {
         this.reservationCode = reservationCode;
     }
-
-	
-	
 
 }

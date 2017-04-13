@@ -60,5 +60,16 @@ public class BookingTest {
 	public void testBooked() {		
 		assertTrue(booking.isBook());
 	}
+	
+	@Test
+    public void putTotalPriceBookTest(){
+	    booking.putTotalPriceBook();
+	    assertTrue(0<booking.getTotalPrice());
+	    booking.setEndDate(0);
+	    double precioAnterior= booking.getTotalPrice();
+	    booking.putTotalPriceBook();
+	    assertTrue(precioAnterior==booking.getTotalPrice());
+	    
+	}
 
 }

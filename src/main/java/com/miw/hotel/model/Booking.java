@@ -2,8 +2,13 @@ package com.miw.hotel.model;
 
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Booking {
 
+	@Id
 	private String id;
 	
 	private long startDate;

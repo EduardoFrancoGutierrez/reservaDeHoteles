@@ -50,6 +50,10 @@ public class Room {
 		return type;
 	}
 
+	public void setType(RoomType type) {
+		this.type = type.name();
+	}
+	
 	public void setType(String type) {
 		this.type = type;
 	}

@@ -1,0 +1,37 @@
+/* CSS styles for navigation bar in all pages */
+
+body {
+    background: url("../img/background.jpg") no-repeat;
+    background-size: cover;
+    color: black;
+}
+
+.navigationBar {
+    padding: 5px;
+    background-color: #FF7400;
+}
+
+.nav a {
+	color: black;
+}
+
+#logoContainer {
+    float: left;
+    margin-right: 20px;
+}
+
+#logo {
+    height: 40px;
+    width: 40px;
+}
+
+#logoTitle {
+    vertical-align: middle;
+    font-size: medium;
+    font-weight: bold;
+    color: black;
+}
+
+.smallRightMargin {
+    margin-right: 10px;
+}

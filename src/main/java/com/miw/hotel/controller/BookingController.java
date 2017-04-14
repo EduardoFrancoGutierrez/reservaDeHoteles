@@ -158,8 +158,9 @@ public class BookingController {
 	private boolean newBookTimeIsValid (Booking booking){
 	    List<Booking> books= bookRepository.findAll();
 	    for (Booking book: books){
-	        if (!compareDateBooks(book, booking));
+	        if (!compareDateBooks(book, booking)){
 	            return false;
+	        }
 	    }
 	    return true;
 	}
@@ -167,8 +168,12 @@ public class BookingController {
 	public boolean compareDateBooks (Booking oldBook, Booking newBook){
         Date startNewDate= new Date(newBook.getStartDate());
         Date endNewDate= new Date (newBook.timeEndWithBookToClean());
-       
-        if (isPosibleDate(startNewDate, oldBook)&&(isPosibleDate(endNewDate, oldBook)))
+        int prueba=5;
+        if (( oldBook.getClient()!=null) &&(oldBook.getClient().getEmail()!=null)&&(oldBook.getClient().getEmail().equals("ed@ed.com")))
+            prueba=0;
+        if (isEqualDate(oldBook.getStartDate(),newBook.getStartDate()))
+            return false;
+        else if (isPosibleDate(startNewDate, oldBook)&&(isPosibleDate(endNewDate, oldBook)))
             return true;
         else {
             if (isEqualDate(oldBook.timeEndWithBookToClean(),newBook.getStartDate()))

@@ -28,7 +28,7 @@ public class BookingTest {
 		client = new Client(1+"", "Juan", "", "666666666", "pepe@gmail.com", "Calle falsa 123", "00000000A");
 		startDate = Calendar.getInstance();
 		endDate = Calendar.getInstance();
-		endDate.add(Calendar.HOUR_OF_DAY,  1);		
+		endDate.add(Calendar.HOUR_OF_DAY,  (int)BOOKING_DURATION);		
 		booking = new Booking(1+"", startDate.getTimeInMillis(), endDate.getTimeInMillis(), room, client);		
 	}
 	

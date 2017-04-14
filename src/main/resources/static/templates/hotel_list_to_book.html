@@ -139,12 +139,77 @@
 				
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary" ng-click="vm.createBook(vm.book)">Reservar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button type="submit" class="btn btn-primary" ng-click="vm.createBook(vm.book); " data-dismiss="modal" data-toggle="modal" data-target="#succesfulBookModal">Reservar</button>
 				</div>
 				</form>
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal fade" id="succesfulBookModal" tabindex="-1" role="dialog" aria-labelledby="succesfulBookModalLabel">
+		<div class="modal-dialog" role="document">			
+			<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="succesfulBookModalLabel">Reserva satisfactoria</h4>
+				</div>
+				<div class="modal-body form">
+					<div class="row">
+						<label class="control-label left-margin">Hotel:</label>
+						<span>{{vm.book.hotel.name}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Habitaci&oacute;n:</label>
+						<span>{{vm.book.room.type}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Precio total &euro;:</label>
+						<span>{{vm.book.room.pricePerHour * vm.book.hours}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Fecha comienzo reserva:</label>
+						<span>{{vm.book.startDate | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Fecha comienzo reserva:</label>
+						<span>{{vm.book.endDate | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Nombre:</label>
+						<span>{{vm.book.client.name}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Apellidos:</label>
+						<span>{{vm.book.client.surname}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Direcci&oacute;n:</label>
+						<span>{{vm.book.client.address}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">NIF:</label>
+						<span>{{vm.book.client.nif}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">M&oacute;vil:</label>
+						<span>{{vm.book.client.movil}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Email:</label>
+						<span>{{vm.book.client.email}}</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
 </div>
 

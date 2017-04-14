@@ -15,7 +15,7 @@ import com.miw.hotel.model.Booking;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-public class BookingRepositoryITTest {
+public class BookingRepositoryIT {
 
 	@Autowired
 	private BookingRepository bookingRepository;

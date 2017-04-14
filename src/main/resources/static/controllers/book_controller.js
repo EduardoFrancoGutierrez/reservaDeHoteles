@@ -1,4 +1,5 @@
-angular.module("reservas").controller("BookController", ['hotelService', 'bookService', function(hotelService, bookService) {
+angular.module(mainApplicationModuleName).controller("BookController", ['hotelService', 'bookService', function(hotelService, bookService) {
+	"use strict";
 	var vm = this;
 	
 	vm.hotels = [];
@@ -26,7 +27,7 @@ angular.module("reservas").controller("BookController", ['hotelService', 'bookSe
 	
 	vm.requestToGetHotels = function(hotelService) {
 		  angular.fromJson(hotelService.findAll().then(function(result){
-	          	vm.hotels			= result;	          	
+	          	vm.hotels = result;	          	
           }));            
 	}
 	

@@ -1,5 +1,5 @@
 angular.module("reservas").controller('BooksController',
-		function(getHotelsService, getBooksByHotelService) {
+		function(getHotelsService, getBooksByHotelService, bookService) {
 			const THERE_IS_NOT_HOTELS 				= "ERROR. No existen hoteles registrados en la aplicación";
 			const SELECTED_HOTEL_OPTION_IS_EMPTY 	= "ERROR. Seleccione al menos un hotel";
 			const THERE_IS_NOT_BOOKS_IN_HOTEL 		= "No existen reservas para este hotel";
@@ -9,6 +9,25 @@ angular.module("reservas").controller('BooksController',
 
 			vm.hotels 	= [];
 			vm.books 	= [];
+			
+			vm.cancelId = 0;
+			
+			vm.setCancel = function(bookingId) {
+				vm.cancelId = bookingId;
+			}
+			
+			vm.cancelBooking = function(bookingId) {
+				vm.cancelMessage = undefined;
+				bookService.cancelBooking(bookingId)
+				.then(function(result){
+					vm.cancelMessage = "Reserva cancelada con éxito";
+					vm.requestToGetBooks(getBooksByHotelService, vm.hotel);
+				})
+				.catch(function(error){
+					vm.cancelMessage = error;
+				});
+			}
+
 
 			vm.getHotels = function() {
 				getHotelsService.getHotels().then(function(serverResponse) {

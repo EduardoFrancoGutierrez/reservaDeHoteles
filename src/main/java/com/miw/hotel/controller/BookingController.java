@@ -57,12 +57,12 @@ public class BookingController {
 		List<Room> rooms = roomRepository.findByHotel_Id(id);
 		List<Booking> books = bookRepository.findAll();
 		List<Booking> booksByHotelID = new ArrayList<Booking>();
-		
+
 		for (Booking book : books)
 			for (Room room : rooms)
 				if (book.getRoom().getId().equals(room.getId()))
 					booksByHotelID.add(book);
-		
+
 		return booksByHotelID;
 	}
 
@@ -93,9 +93,12 @@ public class BookingController {
 			throw new InvalidRoomException();
 		}
 
-		if (clientRepository.findByNif(booking.getClient().getNif()) == null) {
+		Client client = clientRepository.findByNif(booking.getClient().getNif());
+		if (client == null) {
 			booking.getClient().setId(new ObjectId().toString());
 			clientRepository.save(booking.getClient());
+		} else {
+			booking.getClient().setId(client.getId());
 		}
 
 		booking.setId(new ObjectId().toString());

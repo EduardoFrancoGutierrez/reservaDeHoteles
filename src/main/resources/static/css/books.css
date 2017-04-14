@@ -27,3 +27,10 @@
 .centerText {
     text-align: center;
 }
+
+.table {
+	border-radius: 5px;
+    width: 95%;
+    margin: 0px auto;
+    float: none;
+}

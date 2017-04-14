@@ -40,7 +40,7 @@
 							<th class="centerText">Precio total</th>
 							<th class="centerText">Estado</th>
 							<th class="centerText">Habitaci&oacute;n ID</th>
-							<th class="centerText">Cliente</th>
+							<th class="centerText">Cliente ID</th>
 						</tr>
 					</thead>
 					<tbody ng-repeat="book in vm.books">
@@ -50,8 +50,8 @@
 							<td>{{book.endDate | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
 							<td>{{book.totalPrice}} &euro;</td>
 							<td>{{book.status}}</td>
-							<td>{{book.room._id.$oid}}</td>
-							<td>{{book.client._id.$oid}}</td>
+							<td>{{book.room.id}}</td>
+							<td>{{book.client.id}}</td>
 						</tr>
 					</tbody>
 				</table>

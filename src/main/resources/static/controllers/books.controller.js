@@ -3,7 +3,7 @@ angular.module("reservas").controller('BooksController',
 			const THERE_IS_NOT_HOTELS 				= "ERROR. No existen hoteles registrados en la aplicación";
 			const SELECTED_HOTEL_OPTION_IS_EMPTY 	= "ERROR. Seleccione al menos un hotel";
 			const THERE_IS_NOT_BOOKS_IN_HOTEL 		= "No existen reservas para este hotel";
-			const OK_RESPONSE_CODE 		= 200;
+			const OK_RESPONSE_CODE 					= 200;
 
 			var vm = this;
 
@@ -59,6 +59,21 @@ angular.module("reservas").controller('BooksController',
 	        };
 	        
 	        vm.requestToGetBooks = function (serviceToGetBooks, queryParameter) {
-	        	vm.books = angular.fromJson(serviceToGetBooks.getBooks(queryParameter));
+	        	serviceToGetBooks.getBooks(queryParameter).then(function(serverResponse) {
+					var serverResponse = angular.fromJson(serverResponse);
+	                
+	                if (serverResponse.status === OK_RESPONSE_CODE) {
+	                	vm.books = serverResponse.data;
+	                	
+	                	if (vm.hotels.length === 0)
+	                    	vm.error = THERE_IS_NOT_BOOKS_IN_HOTEL;
+	                    else
+	                    	vm.error = null;
+	                }
+	                else
+	                	vm.error = THERE_IS_NOT_BOOKS_IN_HOTEL;
+				}, function() {
+					vm.error = vm.error = THERE_IS_NOT_BOOKS_IN_HOTEL;
+				});
 	        }
 		});

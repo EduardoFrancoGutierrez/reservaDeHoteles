@@ -1,9 +1,17 @@
 angular.module("reservas").factory('getBooksByHotelService', function($http) {
-	const booksMock = "[{\"_id\": {\"$oid\": \"58ee2ee6734d1d271d37fc49\"},\"_class\": \"com.miw.hotel.model.Booking\",\"startDate\": 1509865200000,\"endDate\": 1509894000000,\"room\": {\"_id\": {\"$oid\": \"58ee152a734d1d271d37d1d2\"}},\"client\": {\"_id\": {\"$oid\": \"58ee2b50734d1d271d37f579\"}},\"status\": \"CANCEL\",\"reservationCode\": \"12345678\",\"totalPrice\": 0},{\"_id\": {\"$oid\": \"58ee2f58734d1d271d37fd64\"},\"_class\": \"com.miw.hotel.model.Booking\",\"startDate\": 1512457200000,\"endDate\": 1512486000000,\"room\": {\"_id\": {\"$oid\": \"58ee2223734d1d271d37eb51\"}},\"client\": {\"_id\": {\"$oid\": \"58ee2b50734d1d271d37f579\"}},\"status\": \"PAY_PENDING\",\"reservationCode\": \"87654321\"},{\"_id\": {\"$oid\": \"58ee3033734d1d271d37fde3\"},\"startDate\": 1517904000000,\"endDate\": 1517932800000,\"room\": {\"_id\": \"58ee28f8734d1d271d37f42b\"},\"client\": {\"_id\": \"58ee2b50734d1d271d37f579\"},\"status\": \"CANCEL\",\"reservationCode\": \"12341234\",\"totalPrice\": 0},{\"_id\": {\"$oid\": \"58ee30f7734d1d271d37fe6b\"},\"startDate\": 1488967200000,\"endDate\": 1489010400000,\"room\": {\"_id\": \"58ee1fec734d1d271d37e893\"},\"client\": {\"_id\": \"58ee2b8f734d1d271d37f597\"},\"status\": \"BOOKING\",\"reservationCode\": \"43214321\",\"totalPrice\": 0},{\"_id\": {\"$oid\": \"58ee313a734d1d271d37fe9b\"},\"startDate\": 1491649200000,\"endDate\": 1491678000000,\"room\": {\"_id\": \"58ee2259734d1d271d37ec12\"},\"client\": {\"_id\": \"58ee2b8f734d1d271d37f597\"},\"status\": \"PAY_PENDING\",\"reservationCode\": \"1\",\"totalPrice\": 0},{\"_id\": {\"$oid\": \"58ee3189734d1d271d37fecb\"},\"startDate\": 1492714800000,\"endDate\": 1492761600000,\"room\": {\"_id\": \"58ee292e734d1d271d37f44f\"},\"client\": {\"_id\": \"58ee2b8f734d1d271d37f597\"},\"status\": \"CANCEL\",\"reservationCode\": \"2\",\"totalPrice\": 0},{\"_id\": {\"$oid\": \"58ee320e734d1d271d37ff28\"},\"startDate\": 1495692000000,\"endDate\": 1495742400000,\"room\": {\"_id\": \"58ee20b9734d1d271d37e923\"},\"client\": {\"_id\": \"58ee2bd1734d1d271d37f5d6\"},\"status\": \"BOOKING\",\"reservationCode\": \"3\",\"totalPrice\": 0},{\"_id\": {\"$oid\": \"58ee3277734d1d271d37ff7b\"},\"startDate\": 1498424400000,\"endDate\": 1498456800000,\"room\": {\"_id\": \"58ee2259734d1d271d37ec12\"},\"client\": {\"_id\": \"58ee2bd1734d1d271d37f5d6\"},\"status\": \"PAY_PENDING\",\"reservationCode\": \"4\",\"totalPrice\": 0},{\"_id\": {\"$oid\": \"58ee32b7734d1d271d37ffbb\"},\"startDate\": 1499900400000,\"endDate\": 1499925600000,\"room\": {\"_id\": \"58ee2888734d1d271d37f3c3\"},\"client\": {\"_id\": \"58ee2bd1734d1d271d37f5d6\"},\"status\": \"CANCEL\",\"reservationCode\": \"5\",\"totalPrice\": 0},{\"_id\": {\"$oid\": \"58efa664e545a51010358a32\"},\"_class\": \"com.miw.hotel.model.Booking\",\"startDate\": 0,\"endDate\": 18000,\"room\": {\"_id\": {\"$oid\": \"58ee152a734d1d271d37d1d2\"},\"hotel\": {\"_id\": {\"$oid\": \"58ed07ea734d1d0e65fc797c\"}},\"pricePerHour\": \"25.5\",\"type\": \"INDIVIDUAL\"},\"client\": {\"_id\": {\"$oid\": \"58efa664e545a51010358a31\"},\"name\": \"sdf\",\"surname\": \"sdfg\",\"movil\": \"jhb\",\"email\": \"jhb\",\"address\": \"jhgv\",\"nif\": \"jhbv\"},\"status\": \"BOOKING\"}]";
-
+	const URI = '/api/books/hotel/';
+	
 	return {
 		getBooks : function(hotelID) {		
-			return booksMock;
+			var endpoint = URI + hotelID;
+			
+			return $http.get(endpoint)
+	            .then(function (result) {
+	                    return result;
+	                },
+	                function (result) {
+	                    return result;
+	                });
 		}
 	}
 });

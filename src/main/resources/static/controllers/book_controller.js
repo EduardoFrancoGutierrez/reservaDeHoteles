@@ -38,9 +38,13 @@ angular.module(mainApplicationModuleName).controller("BookController", ['hotelSe
 	}
 	
 	vm.bookRoom = function(hotel, room) {
+		console.log(hotel);
+		console.log(room);
+		console.log(vm.book);
 		vm.book = vm.clearBook;
 		vm.book.hotel = hotel;
 		vm.book.room = room;
+		console.log(vm.book);
 	}
 	
 	vm.createBook = function(book) {

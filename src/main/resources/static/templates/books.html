@@ -40,7 +40,7 @@
 							<th class="centerText">Precio total</th>
 							<th class="centerText">Estado</th>
 							<th class="centerText">Habitaci&oacute;n ID</th>
-							<th class="centerText">Cliente</th>
+							<th class="centerText">Cliente ID</th>
 							<th class="centerText">Acciones</th>
 						</tr>
 					</thead>
@@ -51,8 +51,8 @@
 							<td>{{book.endDate | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
 							<td>{{book.totalPrice}} &euro;</td>
 							<td>{{book.status}}</td>
-							<td>{{book.room._id.$oid}}</td>
-							<td>{{book.client._id.$oid}}</td>
+							<td>{{book.room.id}}</td>
+							<td>{{book.client.id}}</td>
 							<td> 
 							   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#cancelModal"  ng-click="vm.setCancel(book._id.$oid)">Cancelar reserva</button>
 							</td>
@@ -70,10 +70,10 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">Confirmar cancelación</h4>
+	        <h4 class="modal-title">Confirmar cancelaci&oacute;n</h4>
 	      </div>
 	      <div class="modal-body">
-	        <p>¿Desea cancelar la reserva? {{vm.cancelId}}</p>
+	        <p>�Desea cancelar la reserva? {{vm.cancelId}}</p>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>

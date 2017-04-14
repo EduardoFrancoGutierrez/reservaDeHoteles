@@ -26,6 +26,8 @@ public class BookingControllerTest {
 	
 	private static final String CLIENT_ID = "58f0a026e545a5298c4db96a";
 	private static final String ROOM_ID = "58ee21dc734d1d271d37ea45";
+	private static final String HOTEL_ID = "58ed07ea734d1d0e65fc797c";
+	private static final String WRONG_HOTEL_ID = "58ed07ea734d1d0965fc797c";
 	
 	private ObjectId bookingId;
 	
@@ -115,6 +117,16 @@ public class BookingControllerTest {
 	@Test
 	public void testGetAllBooks() {
 		assertNotNull(bookingController.getAllBooks());
+	}
+	
+	@Test
+	public void testGetBooksByHotelID() {
+		assertFalse(bookingController.getByHotelID(HOTEL_ID).isEmpty());
+	}
+	
+	@Test
+	public void testGetBooksByHotelIDEmpty() {
+		assertTrue(bookingController.getByHotelID(WRONG_HOTEL_ID).isEmpty());
 	}
 		
 	@After

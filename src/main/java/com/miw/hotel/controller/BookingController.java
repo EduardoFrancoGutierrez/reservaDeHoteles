@@ -53,7 +53,7 @@ public class BookingController {
 	}
 
 	@RequestMapping(value = "/hotel/{id}", method = RequestMethod.GET)
-	public List<Booking> getByRoomID(@PathVariable(value = "id") String id) {
+	public List<Booking> getByHotelID(@PathVariable(value = "id") String id) {
 		List<Room> rooms = roomRepository.findByHotel_Id(id);
 		List<Booking> books = bookRepository.findAll();
 		List<Booking> booksByHotelID = new ArrayList<Booking>();

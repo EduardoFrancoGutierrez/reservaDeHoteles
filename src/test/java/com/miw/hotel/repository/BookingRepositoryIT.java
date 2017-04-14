@@ -38,6 +38,11 @@ public class BookingRepositoryIT {
 		assertEquals(bookingId.toString(), bookingRepository.findById(bookingId.toString()).getId());
 	}
 	
+	@Test
+	public void testFindAll() {
+		assertFalse(bookingRepository.findAll().isEmpty());
+	}
+	
 	@After
 	public void after() {
 		bookingRepository.delete(bookingId.toString());

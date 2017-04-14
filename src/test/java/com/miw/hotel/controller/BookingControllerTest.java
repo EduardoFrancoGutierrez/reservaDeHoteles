@@ -29,18 +29,15 @@ public class BookingControllerTest {
 	private static final String HOTEL_ID = "58ed07ea734d1d0e65fc797c";
 	private static final String WRONG_HOTEL_ID = "58ed07ea734d1d0965fc797c";
 	
-	private ObjectId bookingId;
+
 	
 	@Autowired
 	private BookingController bookingController;
 	
 	@Autowired
 	private BookingRepository bookingRepository;
+	
 
-	@Before
-	public void before() {
-		bookingId = new ObjectId();
-	}	
 
 	@Test
 	public void testCreateInvalidBookingExceptionBook() {
@@ -68,9 +65,11 @@ public class BookingControllerTest {
 	@Test
 	public void testCreateBook() {
 		Booking booking = new Booking();
-		booking.setId(bookingId.toString());
-		booking.setStartDate(Calendar.getInstance().getTimeInMillis());
-		booking.setEndDate(Calendar.getInstance().getTimeInMillis()+(4*60*60*1000));
+		Calendar cal=Calendar.getInstance();
+		cal.set(1977, 12, 12);
+		booking.setStartDate(cal.getTimeInMillis());
+		
+		booking.setEndDate(cal.getTimeInMillis()+(4*60*60*1000));
 
 		Client client = new Client();
 		client.setId(CLIENT_ID);
@@ -82,7 +81,8 @@ public class BookingControllerTest {
 		booking.setRoom(room);		
 		
 		try {
-			bookingController.createBook(booking);			
+			bookingController.createBook(booking);	
+			bookingRepository.deleteById(booking.getId());
 	
 		} catch (InvalidRoomException | InvalidBookingException e) {
 			fail();
@@ -128,10 +128,37 @@ public class BookingControllerTest {
 	public void testGetBooksByHotelIDEmpty() {
 		assertTrue(bookingController.getByHotelID(WRONG_HOTEL_ID).isEmpty());
 	}
+	
+	@Test
+    public void testCreateInvalidBookingExceptionBookByRepeatBook() {
+	    Booking booking = new Booking();
+        Calendar cal=Calendar.getInstance();
+        cal.set(1978, 12, 12);
+        booking.setStartDate(cal.getTimeInMillis());
+        
+        booking.setEndDate(cal.getTimeInMillis()+(4*60*60*1000));
+
+        Client client = new Client();
+        client.setId(CLIENT_ID);
+        client.setNif("AAAAAA");
+        booking.setClient(client);
+        
+        Room room = new Room();
+        room.setId(ROOM_ID);
+        booking.setRoom(room);      
+        
+        try {
+            bookingController.createBook(booking);  
+            bookingController.createBook(booking);  
+            
+    
+        } catch (InvalidBookingException e) {
+            bookingRepository.deleteById(booking.getId());
+        } catch (InvalidRoomException e) {
+            fail();
+        }
+    }
 		
-	@After
-	public void after() {
-		bookingRepository.delete(bookingId.toString());
-	}
+
 
 }

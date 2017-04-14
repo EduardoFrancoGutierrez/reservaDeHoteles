@@ -11,6 +11,8 @@ public interface BookingRepository extends MongoRepository<Booking, String> {
 	Booking findById(String id);
 
 	Booking findByReservationCode(String reservationCode);
+	
+	void deleteById(String _id);
 
 	List<Booking> findByClient_id(String nif);
 

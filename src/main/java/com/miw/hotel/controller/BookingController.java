@@ -1,8 +1,12 @@
 package com.miw.hotel.controller;
 
+
 import java.math.BigInteger;
 import java.security.SecureRandom;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -114,7 +118,13 @@ public class BookingController {
 
 		booking.setId(new ObjectId().toString());
 		booking.putTotalPriceBook();
+
+		if (!newBookTimeIsValid(booking)){
+		    throw new InvalidBookingException();
+		}
+
 		booking.setReservationCode(new BigInteger(130, random).toString(32));
+
 		bookRepository.save(booking);		
 
 		if ((booking.getClient().getEmail() != null) && !booking.getClient().getEmail().isEmpty())
@@ -154,6 +164,57 @@ public class BookingController {
 		return precioTotalCliente;
 	}
 	
+
+	private boolean newBookTimeIsValid (Booking booking){
+	    List<Booking> books= bookRepository.findAll();
+	    for (Booking book: books){
+	        if (!compareDateBooks(book, booking)){
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+	
+	public boolean compareDateBooks (Booking oldBook, Booking newBook){
+        Date startNewDate= new Date(newBook.getStartDate());
+        Date endNewDate= new Date (newBook.timeEndWithBookToClean());
+        int prueba=5;
+        if (( oldBook.getClient()!=null) &&(oldBook.getClient().getEmail()!=null)&&(oldBook.getClient().getEmail().equals("ed@ed.com")))
+            prueba=0;
+        if (isEqualDate(oldBook.getStartDate(),newBook.getStartDate()))
+            return false;
+        else if (isPosibleDate(startNewDate, oldBook)&&(isPosibleDate(endNewDate, oldBook)))
+            return true;
+        else {
+            if (isEqualDate(oldBook.timeEndWithBookToClean(),newBook.getStartDate()))
+                return true;
+            else if (isEqualDate(oldBook.getStartDate(),newBook.timeEndWithBookToClean()))    
+                return true;      
+            return false; 
+        }
+        
+    }
+    
+    public boolean isPosibleDate(Date date, Booking book){
+        Date startDate= new Date(book.getStartDate());
+        Date endDate= new Date (book.timeEndWithBookToClean());
+        if (date.after(startDate)&&(date.before(endDate)))
+            return false;
+        return true;
+    }
+    
+    public boolean isEqualDate(long oldBook, long newBook){
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTimeInMillis(oldBook);
+        cal2.setTimeInMillis(newBook);
+        boolean sameDay = cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                          cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)&&
+                          cal1.get(Calendar.HOUR_OF_DAY) == cal2.get(Calendar.HOUR_OF_DAY)&&
+                          cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE);
+        return sameDay;
+    }
+
 	private void sendMailToClientForANewBook(Booking booking) {
 		Client client = clientRepository.findById(booking.getClient().getId());
 		String body = "Sr/Sra " + client.getName() + ":\n\nSu reserva en el hotel ";
@@ -164,6 +225,8 @@ public class BookingController {
 		body += " ha sido realizada satisfactoriamente.\n\nReciba un cordial saludo.";
 		mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " realizada", body);
 	}
+
+
 	
 	private void sendMailToHotelForANewBook(Booking booking) {
 		HotelManager manager = hotelManagerRepository.findByHotel_Id(booking.getRoom().getHotel().getId());
@@ -177,4 +240,5 @@ public class BookingController {
 			mailSender.sendMail(manager.getEmail(), "Reserva " + booking.getReservationCode() + " creada", body);
 		}
 	}
+
 }

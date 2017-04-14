@@ -19,7 +19,8 @@ angular.module("reservas").config(function($routeProvider) {
 	
 	.when('/book_room', {
 		templateUrl : "templates/hotel_list_to_book.html",
-		controller: "BookController"
+		controller: "BookController",
+		controllerAs: "vm"
 	})
 	
 	.when('/cancel_book', {

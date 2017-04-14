@@ -1,5 +1,7 @@
 angular.module("reservas").controller('BooksController',
 		function(getHotelsService, getBooksByHotelService, bookService) {
+			"use strict";
+	
 			const THERE_IS_NOT_HOTELS 				= "ERROR. No existen hoteles registrados en la aplicación";
 			const SELECTED_HOTEL_OPTION_IS_EMPTY 	= "ERROR. Seleccione al menos un hotel";
 			const THERE_IS_NOT_BOOKS_IN_HOTEL 		= "No existen reservas para este hotel";

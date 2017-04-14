@@ -21,10 +21,12 @@ import com.miw.hotel.exceptions.InvalidBookingException;
 import com.miw.hotel.exceptions.InvalidRoomException;
 import com.miw.hotel.model.Booking;
 import com.miw.hotel.model.Client;
+import com.miw.hotel.model.HotelManager;
 import com.miw.hotel.model.Room;
 import com.miw.hotel.model.Status;
 import com.miw.hotel.repository.BookingRepository;
 import com.miw.hotel.repository.ClientRepository;
+import com.miw.hotel.repository.HotelManagerRepository;
 import com.miw.hotel.repository.HotelRepository;
 import com.miw.hotel.repository.RoomRepository;
 import com.miw.hotel.utils.MailSender;
@@ -44,6 +46,9 @@ public class BookingController {
 
 	@Autowired
 	HotelRepository hotelRepository;
+	
+	@Autowired
+	HotelManagerRepository hotelManagerRepository;
 
 	@Autowired
 	MailSender mailSender;
@@ -88,6 +93,8 @@ public class BookingController {
 		body += booking.getReservationCode();
 		body += " ha sido cancelada.\n\nReciba un cordial saludo.";
 		mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
+		HotelManager manager = hotelManagerRepository.findByHotel_Id(booking.getRoom().getHotel().getId());
+		mailSender.sendMail(manager.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -118,10 +125,13 @@ public class BookingController {
 
 		booking.setReservationCode(new BigInteger(130, random).toString(32));
 
-		bookRepository.save(booking);
-		
+		bookRepository.save(booking);		
+
 		if ((booking.getClient().getEmail() != null) && !booking.getClient().getEmail().isEmpty())
 			this.sendMailToClientForANewBook(booking);
+
+		if(booking.getRoom().getHotel() != null)
+			this.sendMailToHotelForANewBook(booking);
 	}
 
 	@RequestMapping(value = "/client/{reservationCode}", method = RequestMethod.GET)
@@ -214,6 +224,21 @@ public class BookingController {
 		body += booking.getReservationCode();
 		body += " ha sido realizada satisfactoriamente.\n\nReciba un cordial saludo.";
 		mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " realizada", body);
+	}
+
+
+	
+	private void sendMailToHotelForANewBook(Booking booking) {
+		HotelManager manager = hotelManagerRepository.findByHotel_Id(booking.getRoom().getHotel().getId());
+		if(manager != null) {
+			String body = "Sr/Sra " + manager.getName() + ":\n\nSe ha realizado una reverva en su hotel ";
+			body += hotelRepository.findById(roomRepository.findById(booking.getRoom().getId()).getHotel().getId())
+					.getName();
+			body += " y con código de reserva ";
+			body += booking.getReservationCode();
+			body += "\n\nReciba un cordial saludo.";
+			mailSender.sendMail(manager.getEmail(), "Reserva " + booking.getReservationCode() + " creada", body);
+		}
 	}
 
 }

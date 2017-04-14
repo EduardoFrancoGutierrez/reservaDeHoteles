@@ -10,196 +10,200 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Booking {
 
+
     private static final int BOOKING_DURATION_CLEAN = 2;
 
-    @Id
-    private String id;
+	private static final long SECONDS_HOUR = 3600;
 
-    private long startDate;
 
-    private long endDate;
+	@Id
+	private String id;
 
-    private Room room;
+	private long startDate;
 
-    private Client client;
+	private long endDate;
 
-    private String status;
+	private Room room;
 
-    private String reservationCode;
+	private Client client;
 
-    private double totalPrice;
+	private String status;
 
-    public Booking() {
-        this.status = Status.BOOKING.name();
-    }
+	private String reservationCode;
 
-    public Booking(String id, long startDate, long endDate, Room room, Client client) {
-        super();
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.room = room;
-        this.client = client;
-        this.status = Status.BOOKING.name();
-        this.totalPrice = 0.0;
-    }
+	private double totalPrice;
 
-    public String getId() {
-        return id;
-    }
+	public Booking() {
+		this.status = Status.BOOKING.name();
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public Booking(String id, long startDate, long endDate, Room room, Client client) {
+		super();
+		this.id = id;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.room = room;
+		this.client = client;
+		this.status = Status.BOOKING.name();
+		this.totalPrice = 0.0;
+	}
 
-    public long getStartDate() {
-        return startDate;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setStartDate(long startDate) {
-        this.startDate = startDate;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public long getEndDate() {
-        return endDate;
-    }
+	public long getStartDate() {
+		return startDate;
+	}
 
-    public void setEndDate(long endDate) {
-        this.endDate = endDate;
-    }
+	public void setStartDate(long startDate) {
+		this.startDate = startDate;
+	}
 
-    public Room getRoom() {
-        return room;
-    }
+	public long getEndDate() {
+		return endDate;
+	}
 
-    public void setRoom(Room room) {
-        this.room = room;
-    }
+	public void setEndDate(long endDate) {
+		this.endDate = endDate;
+	}
 
-    public Client getClient() {
-        return client;
-    }
+	public Room getRoom() {
+		return room;
+	}
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public Client getClient() {
+		return client;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	public void setClient(Client client) {
+		this.client = client;
+	}
 
-    public boolean isBook() {
-        return this.status.equals(Status.BOOKING.name());
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public long getDuration() {
-        return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
+	public boolean isBook() {
+		return this.status.equals(Status.BOOKING.name());
+	}
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+	public long getDuration() {
+		return TimeUnit.MILLISECONDS.toHours(this.endDate - this.startDate);
+	}
 
-    @Override
-    public String toString() {
-        return "Booking {id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", room=" + room + ", client=" + client
-                + ", status=" + status + ", totalPrice=" + totalPrice + "}";
-    }
+	public double getTotalPrice() {
+		return totalPrice;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((client == null) ? 0 : client.hashCode());
-        result = prime * result + (int) (endDate ^ (endDate >>> 32));
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        result = prime * result + ((reservationCode == null) ? 0 : reservationCode.hashCode());
-        result = prime * result + ((room == null) ? 0 : room.hashCode());
-        result = prime * result + (int) (startDate ^ (startDate >>> 32));
-        result = prime * result + ((status == null) ? 0 : status.hashCode());
-        long temp;
-        temp = Double.doubleToLongBits(totalPrice);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
-    }
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Booking other = (Booking) obj;
-        if (client == null) {
-            if (other.client != null)
-                return false;
-        } else if (!client.equals(other.client))
-            return false;
-        if (endDate != other.endDate)
-            return false;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        if (reservationCode == null) {
-            if (other.reservationCode != null)
-                return false;
-        } else if (!reservationCode.equals(other.reservationCode))
-            return false;
-        if (room == null) {
-            if (other.room != null)
-                return false;
-        } else if (!room.equals(other.room))
-            return false;
-        if (startDate != other.startDate)
-            return false;
-        if (status == null) {
-            if (other.status != null)
-                return false;
-        } else if (!status.equals(other.status))
-            return false;
-        if (Double.doubleToLongBits(totalPrice) != Double.doubleToLongBits(other.totalPrice))
-            return false;
-        return true;
-    }
+	@Override
+	public String toString() {
+		return "Booking {id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", room=" + room
+				+ ", client=" + client + ", status=" + status + ", totalPrice=" + totalPrice + "}";
+	}
 
-    public boolean valid() {
-        if (this.startDate == this.endDate)
-            return false;
-        if (this.room == null)
-            return false;
-        if (this.client == null)
-            return false;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((client == null) ? 0 : client.hashCode());
+		result = prime * result + (int) (endDate ^ (endDate >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((reservationCode == null) ? 0 : reservationCode.hashCode());
+		result = prime * result + ((room == null) ? 0 : room.hashCode());
+		result = prime * result + (int) (startDate ^ (startDate >>> 32));
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(totalPrice);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
 
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Booking other = (Booking) obj;
+		if (client == null) {
+			if (other.client != null)
+				return false;
+		} else if (!client.equals(other.client))
+			return false;
+		if (endDate != other.endDate)
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (reservationCode == null) {
+			if (other.reservationCode != null)
+				return false;
+		} else if (!reservationCode.equals(other.reservationCode))
+			return false;
+		if (room == null) {
+			if (other.room != null)
+				return false;
+		} else if (!room.equals(other.room))
+			return false;
+		if (startDate != other.startDate)
+			return false;
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
+			return false;
+		if (Double.doubleToLongBits(totalPrice) != Double.doubleToLongBits(other.totalPrice))
+			return false;
+		return true;
+	}
 
-    public void putTotalPriceBook(){  
+	public boolean valid() {
+		if (this.startDate == this.endDate)
+			return false;
+		if (this.room == null)
+			return false;
+		if (this.client == null)
+			return false;
+
+		return true;
+	}
+
+	public void putTotalPriceBook(){  
         if ((this.startDate<this.endDate)&&(this.room!=null)&&(this.room.getPricePerHour()!=null)){
             long priceCaluclate= this.room.getPricePerHour().longValue()*this.getDuration();
             this.setTotalPrice(priceCaluclate);
         }
             
      }
-    
-    public String getReservationCode() {
-        return reservationCode;
-    }
 
-    public void setReservationCode(String reservationCode) {
-        this.reservationCode = reservationCode;
-    }
+	public String getReservationCode() {
+		return reservationCode;
+	}
+
+	public void setReservationCode(String reservationCode) {
+		this.reservationCode = reservationCode;
+	}
 
     public long timeEndWithBookToClean(){
         Calendar add3hours = Calendar.getInstance();

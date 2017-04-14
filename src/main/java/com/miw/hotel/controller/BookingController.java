@@ -1,6 +1,9 @@
 package com.miw.hotel.controller;
 
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,6 +47,8 @@ public class BookingController {
 
 	@Autowired
 	MailSender mailSender;
+	
+	private SecureRandom random = new SecureRandom();
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public List<Booking> getAllBooks() {
@@ -106,11 +111,17 @@ public class BookingController {
 
 		booking.setId(new ObjectId().toString());
 		booking.putTotalPriceBook();
+
 		if (!newBookTimeIsValid(booking)){
 		    throw new InvalidBookingException();
 		}
-		bookRepository.save(booking);
 
+		booking.setReservationCode(new BigInteger(130, random).toString(32));
+
+		bookRepository.save(booking);
+		
+		if ((booking.getClient().getEmail() != null) && !booking.getClient().getEmail().isEmpty())
+			this.sendMailToClientForANewBook(booking);
 	}
 
 	@RequestMapping(value = "/client/{reservationCode}", method = RequestMethod.GET)
@@ -143,6 +154,7 @@ public class BookingController {
 		return precioTotalCliente;
 	}
 	
+
 	private boolean newBookTimeIsValid (Booking booking){
 	    List<Booking> books= bookRepository.findAll();
 	    for (Booking book: books){
@@ -187,4 +199,16 @@ public class BookingController {
                           cal1.get(Calendar.MINUTE) == cal2.get(Calendar.MINUTE);
         return sameDay;
     }
+
+	private void sendMailToClientForANewBook(Booking booking) {
+		Client client = clientRepository.findById(booking.getClient().getId());
+		String body = "Sr/Sra " + client.getName() + ":\n\nSu reserva en el hotel ";
+		body += hotelRepository.findById(roomRepository.findById(booking.getRoom().getId()).getHotel().getId())
+				.getName();
+		body += " y con código de reserva ";
+		body += booking.getReservationCode();
+		body += " ha sido realizada satisfactoriamente.\n\nReciba un cordial saludo.";
+		mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " realizada", body);
+	}
+
 }

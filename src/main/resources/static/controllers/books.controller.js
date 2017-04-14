@@ -1,5 +1,7 @@
 angular.module("reservas").controller('BooksController',
 		function(getHotelsService, getBooksByHotelService, bookService) {
+			"use strict";
+	
 			const THERE_IS_NOT_HOTELS 				= "ERROR. No existen hoteles registrados en la aplicación";
 			const SELECTED_HOTEL_OPTION_IS_EMPTY 	= "ERROR. Seleccione al menos un hotel";
 			const THERE_IS_NOT_BOOKS_IN_HOTEL 		= "No existen reservas para este hotel";
@@ -11,6 +13,7 @@ angular.module("reservas").controller('BooksController',
 			vm.books 	= [];
 			
 			vm.cancelId = 0;
+			vm.showError = false;
 			
 			vm.setCancel = function(bookingId) {
 				vm.cancelId = bookingId;
@@ -28,7 +31,6 @@ angular.module("reservas").controller('BooksController',
 				});
 			}
 
-
 			vm.getHotels = function() {
 				getHotelsService.getHotels().then(function(serverResponse) {
 					var serverResponse = angular.fromJson(serverResponse);
@@ -36,14 +38,21 @@ angular.module("reservas").controller('BooksController',
 	                if (serverResponse.status === OK_RESPONSE_CODE) {
 	                	vm.hotels = serverResponse.data;
 	                	
-	                	if (vm.hotels.length === 0)
-	                    	vm.error = THERE_IS_NOT_HOTELS;
-	                    else
+	                	if (vm.hotels.length === 0) {
+	                		vm.showError = true;
+	                		vm.error = THERE_IS_NOT_HOTELS;
+	                	}
+	                    else {
+	                    	vm.showError = false;
 	                    	vm.error = null;
+	                    }	
 	                }
-	                else
+	                else {
+	                	vm.showError = true;
 	                	vm.error = THERE_IS_NOT_HOTELS;
+	                }
 				}, function() {
+					vm.showError = true;
 					vm.error = vm.error = THERE_IS_NOT_HOTELS;;
 				});
 			};
@@ -51,11 +60,14 @@ angular.module("reservas").controller('BooksController',
 			vm.getBooks = function () {
 	            if ((vm.hotel !== undefined) && (vm.hotel.length > 0)) {
 	                vm.error = null;
+	                vm.showError = false;
 	                
 	                vm.requestToGetBooks(getBooksByHotelService, vm.hotel);
 	            }
-	            else 
+	            else {
+	            	vm.showError = true;
 	            	vm.error = SELECTED_HOTEL_OPTION_IS_EMPTY;
+	            }
 	        };
 	        
 	        vm.requestToGetBooks = function (serviceToGetBooks, queryParameter) {
@@ -65,14 +77,21 @@ angular.module("reservas").controller('BooksController',
 	                if (serverResponse.status === OK_RESPONSE_CODE) {
 	                	vm.books = serverResponse.data;
 	                	
-	                	if (vm.hotels.length === 0)
-	                    	vm.error = THERE_IS_NOT_BOOKS_IN_HOTEL;
-	                    else
+	                	if (vm.hotels.length === 0) {
+	                		vm.showError = true;
+	                		vm.error = THERE_IS_NOT_BOOKS_IN_HOTEL;
+	                	}
+	                    else {
+	                    	vm.showError = false;
 	                    	vm.error = null;
+	                    }
 	                }
-	                else
+	                else {
+	                	vm.showError = true;
 	                	vm.error = THERE_IS_NOT_BOOKS_IN_HOTEL;
+	                }
 				}, function() {
+					vm.showError = true;
 					vm.error = vm.error = THERE_IS_NOT_BOOKS_IN_HOTEL;
 				});
 	        }

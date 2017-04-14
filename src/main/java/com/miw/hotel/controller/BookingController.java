@@ -1,5 +1,6 @@
 package com.miw.hotel.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -115,5 +116,29 @@ public class BookingController {
 	        }
 	    }
 	    return precioTotalCliente;
+	}
+	
+	private boolean newBookTimeIsValid (Booking booking){
+	    List<Booking> books= bookRepository.findAll();
+	    for (Booking book: books){
+	        compareDateBooks(book, booking);
+	    }
+	    return false;
+	}
+	
+	private boolean compareDateBooks (Booking oldBook, Booking newBook){
+	    Date startNewDate= new Date(newBook.getStartDate());
+	    Date endNewDate= new Date (newBook.getEndDate());
+	    if (isPosibleDate(startNewDate, oldBook)&&(isPosibleDate(endNewDate, oldBook)))
+	        return true;
+	    return false;
+	}
+	
+	private boolean isPosibleDate(Date date, Booking book){
+	    Date startDate= new Date(book.getStartDate());
+	    Date endDate= new Date (book.getEndDate());
+	    if (date.after(startDate)&&(date.before(endDate)))
+	        return false;
+	    return true;
 	}
 }

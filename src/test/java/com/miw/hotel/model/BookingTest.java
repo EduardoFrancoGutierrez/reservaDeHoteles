@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -71,5 +72,12 @@ public class BookingTest {
 	    assertTrue(precioAnterior==booking.getTotalPrice());
 	    
 	}
-
+	
+	@Test
+	public void isPosibleDateTest(){
+	    Calendar calendar = startDate;
+	    calendar.add(Calendar.HOUR_OF_DAY, (int) -1);
+	    Date date = new Date (calendar.getTimeInMillis());
+	    booking.isPosibleDate(date, booking);
+	}
 }

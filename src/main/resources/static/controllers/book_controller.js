@@ -1,25 +1,9 @@
 angular.module(mainApplicationModuleName).controller("BookController", ['hotelService', 'bookService', function(hotelService, bookService) {
 	"use strict";
+	
 	var vm = this;
 	
 	vm.hotels = [];
-	
-	vm.clearBook = {
-		client: {
-			name: '',
-			surname: '',
-			nif: '',
-			movil: '',
-			email: '',
-			address: ''
-		},
-		hotel: { 
-			name: ''
-		},
-		room: {}
-	}
-	
-	vm.book = {};
 	
 	vm.getHotels = function() {
 		return vm.requestToGetHotels(hotelService);
@@ -38,14 +22,14 @@ angular.module(mainApplicationModuleName).controller("BookController", ['hotelSe
 	}
 	
 	vm.bookRoom = function(hotel, room) {
-		vm.book = vm.clearBook;
+		vm.book = {};
 		vm.book.hotel = hotel;
 		vm.book.room = room;
 	}
 	
 	vm.createBook = function(book) {
-		book.endDate =  moment(book.startDate).add(book.hours, 'hours').unix();		
-		book.startDate = moment(book.startDate).unix();		
+		book.startDate = book.startDate.getTime();
+		book.endDate = book.startDate + (book.hours * 60 * 60 * 1000);
 		vm.requestToCreateBook(bookService, book);
 	}
 	

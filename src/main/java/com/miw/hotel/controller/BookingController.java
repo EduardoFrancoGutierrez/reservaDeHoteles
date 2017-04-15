@@ -94,7 +94,8 @@ public class BookingController {
 			body += booking.getReservationCode();
 			body += " ha sido cancelada.\n\nReciba un cordial saludo.";
 			mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
-			HotelManager manager = hotelManagerRepository.findByHotel_Id(booking.getRoom().getHotel().getId());
+			Room room = roomRepository.findById(booking.getRoom().getId());
+			HotelManager manager = hotelManagerRepository.findByHotel_Id(room.getHotel().getId());
 			mailSender.sendMail(manager.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
 		}
 	}

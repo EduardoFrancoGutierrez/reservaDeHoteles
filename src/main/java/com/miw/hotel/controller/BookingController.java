@@ -82,19 +82,21 @@ public class BookingController {
 	@RequestMapping(value = "", method = RequestMethod.DELETE)
 	public void cancelBooking(@RequestBody String id) {
 		Booking booking = bookRepository.findById(id);
-		booking.setStatus(Status.CANCEL.name());
-		bookRepository.save(booking);
-
-		Client client = clientRepository.findById(booking.getClient().getId());
-		String body = "Sr/Sra " + client.getName() + ":\n\nSu reserva en el hotel ";
-		body += hotelRepository.findById(roomRepository.findById(booking.getRoom().getId()).getHotel().getId())
-				.getName();
-		body += " y con código de reserva ";
-		body += booking.getReservationCode();
-		body += " ha sido cancelada.\n\nReciba un cordial saludo.";
-		mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
-		HotelManager manager = hotelManagerRepository.findByHotel_Id(booking.getRoom().getHotel().getId());
-		mailSender.sendMail(manager.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
+		if(booking!=null){
+			booking.setStatus(Status.CANCEL.name());
+			bookRepository.save(booking);
+	
+			Client client = clientRepository.findById(booking.getClient().getId());
+			String body = "Sr/Sra " + client.getName() + ":\n\nSu reserva en el hotel ";
+			body += hotelRepository.findById(roomRepository.findById(booking.getRoom().getId()).getHotel().getId())
+					.getName();
+			body += " y con código de reserva ";
+			body += booking.getReservationCode();
+			body += " ha sido cancelada.\n\nReciba un cordial saludo.";
+			mailSender.sendMail(client.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
+			HotelManager manager = hotelManagerRepository.findByHotel_Id(booking.getRoom().getHotel().getId());
+			mailSender.sendMail(manager.getEmail(), "Reserva " + booking.getReservationCode() + " cancelada", body);
+		}
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

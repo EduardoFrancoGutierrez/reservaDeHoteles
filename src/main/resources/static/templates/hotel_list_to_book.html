@@ -9,19 +9,17 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-2">
-					<img src="{{hotel.image}}" alt="{{hotel.name}}" class="img-responsive img-rounded">
+					<img src="img/hotels/{{hotel.image}}" alt="{{hotel.name}}" class="img-responsive img-rounded">
 				</div>
 				<div class="col-md-10">
-					<h3>Desde {{hotel.minPrice}} �/hora</h3>
-					
-					<button type="button" class="btn btn-default" ng-click="vm.showRooms(hotel)">Ver habitaciones</button>
+					<h3>Desde {{hotel.minPrice}} €/hora</h3>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row"> 
 				<table class="table table-striped">
 				  	<thead>
 					  	<tr>
-					  		<th> Tipo habitaci�n </th>
+					  		<th> Tipo habitación </th>
 					  		<th> Precio </th>
 					  		<th></th>
 					  	</tr>				  		
@@ -29,8 +27,8 @@
 				  	<tbody>
 				  		<tr ng-repeat="room in hotel.rooms">
 				  			<td>{{room.type}}</td>
-				  			<td>{{room.pricePerHour}} �</td>
-				  			<td><button type="button" class="btn btn-primary" ng-click="vm.bookRoom(room)">Reservar</button>
+				  			<td>{{room.pricePerHour}} €</td>
+				  			<td><button type="button" class="btn btn-primary showModal" ng-click="vm.bookRoom(hotel, room)" data-toggle="modal" data-target="#bookModal">Reservar</button>
 				  		</tr>
 				  	</tbody>
 				  	
@@ -40,29 +38,181 @@
 	</div>
 
 	<div class="modal fade" id="bookModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel">
-		<div class="modal-dialog" role="document">
+		<div class="modal-dialog" role="document">			
 			<div class="modal-content">
+			<form>
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="bookModalLabel">Reserva</h4>
+					<h4 class="modal-title" id="bookModalLabel">Reserva de habitación</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body form">
 					
+					<div class="form-group">
+						<label class="control-label">Hotel</label>
+						<span ng-bind="vm.book.hotel.name" class="form-control" readonly></span>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Habitación</label>
+								<span ng-bind="vm.book.room.type" class="form-control" readonly></span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Precio/Hora (€)</label>
+								<span ng-bind="vm.book.room.pricePerHour" class="form-control" readonly></span>
+							</div>
+						</div>
+					</div>
 				
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">								
+								<div class="dropdown form-group">
+				                    <label>Fecha de la reserva</label>
+				                    <div class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown">
+				                        <div class="input-group date">
+				                            <input type="text" class="form-control" data-ng-model="vm.book.startDate" data-date-time-input="DD-MM-YYYY HH:mm">
+				                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				                        </div>
+				                    </div>
+				                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+				                        <datetimepicker 
+					                        data-ng-model="vm.book.startDate" 
+					                        data-datetimepicker-config="{ dropdownSelector: '#dropdownStart', renderOn: 'start-date-changed' }">
+				                        </datetimepicker>
+				                    </ul>
+				                </div>						
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Nº de horas</label>
+								<input type="number" class="form-control" ng-model="vm.book.hours" required>
+							</div>
+						</div>
+					</div>		
+					
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Nombre</label>
+								<input type="text" class="form-control" ng-model="vm.book.client.name" required>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Apellidos</label>
+								<input type="text" class="form-control" ng-model="vm.book.client.surname" required>
+							</div>
+						</div>
+					</div>		
+					<div class="form-group">
+						<label class="control-label">Dirección</label>
+						<input type="text" class="form-control" ng-model="vm.book.client.address" required>
+					</div>
+					
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Nif</label>
+								<input type="text" class="form-control" ng-model="vm.book.client.nif" required>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Móvil</label>
+								<input type="text" class="form-control" ng-model="vm.book.client.movil" required>
+							</div>
+						</div>
+					</div>							
+					<div class="form-group">
+						<label class="control-label">Email</label>
+						<input type="email" class="form-control" ng-model="vm.book.client.email" required>
+					</div>	
+					<div class="form-group">
+                        <label class="control-label">Precio Total: {{(+vm.book.hours) * vm.book.room.pricePerHour}} € </label>
+                    </div>  
 				
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" ng-click="vm.createBook(vm.book)">Reservar</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+					<button type="submit" class="btn btn-primary" ng-click="vm.createBook(vm.book); " data-dismiss="modal" data-toggle="modal" data-target="#succesfulBookModal">Reservar</button>
 				</div>
+				</form>
 			</div>
 		</div>
 	</div>
-
-
-	{{vm.greeting}}
+	
+	<div class="modal fade" id="succesfulBookModal" tabindex="-1" role="dialog" aria-labelledby="succesfulBookModalLabel">
+		<div class="modal-dialog" role="document">			
+			<div class="modal-content">
+			<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="succesfulBookModalLabel">Reserva satisfactoria</h4>
+				</div>
+				<div class="modal-body form">
+					<div class="row">
+						<label class="control-label left-margin">Hotel:</label>
+						<span>{{vm.book.hotel.name}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Habitaci&oacute;n:</label>
+						<span>{{vm.book.room.type}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Precio total &euro;:</label>
+						<span>{{vm.book.room.pricePerHour * vm.book.hours}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Fecha comienzo reserva:</label>
+						<span>{{vm.book.startDate | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Fecha comienzo reserva:</label>
+						<span>{{vm.book.endDate | date: 'dd/MM/yyyy HH:mm:ss'}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Nombre:</label>
+						<span>{{vm.book.client.name}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Apellidos:</label>
+						<span>{{vm.book.client.surname}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Direcci&oacute;n:</label>
+						<span>{{vm.book.client.address}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">NIF:</label>
+						<span>{{vm.book.client.nif}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">M&oacute;vil:</label>
+						<span>{{vm.book.client.movil}}</span>
+					</div>
+					<div class="row">
+						<label class="control-label left-margin">Email:</label>
+						<span>{{vm.book.client.email}}</span>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+				</div>
+				</form>
+				<div class="panel-footer"  style ="background-color: #d9534f;" ng-show="vm.showErrorCreate">
+                    <span class="error">{{vm.errorCreate}}</span>
+                 </div>
+			</div>
+		</div>
+	</div>
+	
 </div>
 

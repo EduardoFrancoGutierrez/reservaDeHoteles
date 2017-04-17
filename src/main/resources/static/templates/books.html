@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<section ng-controller="BooksController as vm" ng-init="vm.getHotels()">
+	<br />
+	<div class="panel panel-default">
+		<div class="panel-heading">Buscar reservas</div>
+		<div class="panel-body">
+			<form>
+				<div class="form-group row">
+					<label for="hotel" class="col-sm-1 control-label">Hotel:</label>
+					<div class="col-sm-11">
+						<select ng-model="vm.hotel" ng-change="vm.getBooks()"
+							class="form-control" id="hotel" required="required">
+							<option ng-repeat="hotelWrapper in vm.hotels"
+								value="{{hotelWrapper.id}}">{{hotelWrapper.name}}</option>
+						</select>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="panel-footer" ng-if="vm.showError">
+			<span class="error">{{vm.error}}</span>
+		</div>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Reservas</div>
+		<div class="panel-body">
+			<div class="col-md-11 formContainer">
+				<table class="table table-bordered centerText">
+					<thead>
+						<tr class="active">
+							<th class="centerText">C&oacute;digo reserva</th>
+							<th class="centerText">Fecha entrada</th>
+							<th class="centerText">Fecha salida</th>
+							<th class="centerText">Precio total</th>
+							<th class="centerText">Estado</th>
+							<th class="centerText">Habitaci&oacute;n ID</th>
+							<th class="centerText">Cliente ID</th>
+							<th class="centerText">Acciones</th>
+						</tr>
+					</thead>
+					<tbody ng-repeat="book in vm.books">
+						<tr class="success">
+							<td>{{book.reservationCode}}</td>
+							<td>{{book.startDate | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+							<td>{{book.endDate | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+							<td>{{book.totalPrice}} &euro;</td>
+							<td>{{book.status}}</td>
+							<td>{{book.room.id}}</td>
+							<td>{{book.client.id}}</td>
+							<td>
+								<button type="button" class="btn btn-default"
+									data-toggle="modal" data-target="#cancelModal"
+									ng-click="vm.setCancel(book._id.$oid)">Cancelar
+									reserva</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	</div>
+	<br /> <br />
+
+	<div class="modal fade" id="cancelModal" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">Confirmar cancelaci&oacute;n</h4>
+				</div>
+				<div class="modal-body">
+					<p>&iquest;Desea cancelar la reserva? {{vm.cancelId}}</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+					<button type="button" class="btn btn-primary"
+						ng-click="vm.cancelBooking(vm.cancelId)" data-dismiss="modal">Si</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

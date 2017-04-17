@@ -12,16 +12,22 @@ angular.module("reservas").config(function($routeProvider) {
 	})
 	
 	.when('/books', {
-		templateUrl : "templates/hotel_list_to_book.html",
-		controller: "BookController"
+		templateUrl : "templates/books.html",
+		controller: "BooksController",
+		css: "css/books.css"
 	})
 	
 	.when('/book_room', {
-		templateUrl : "templates/book_room.html"
+		templateUrl : "templates/hotel_list_to_book.html",
+		controller: "BookController",
+		controllerAs: "vm",
+		css: "css/hotel_list_to_book.css"
 	})
 	
 	.when('/cancel_book', {
-		templateUrl : "templates/cancel_book.html"
+		templateUrl : "templates/cancel_book.html",
+		controller: "CancelController",
+		controllerAs: "vm"
 	})
 		
 	.when('/error', {

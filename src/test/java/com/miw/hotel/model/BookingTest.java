@@ -1,6 +1,9 @@
 package com.miw.hotel.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
@@ -25,7 +28,7 @@ public class BookingTest {
 		client = new Client(1+"", "Juan", "", "666666666", "pepe@gmail.com", "Calle falsa 123", "00000000A");
 		startDate = Calendar.getInstance();
 		endDate = Calendar.getInstance();
-		endDate.add(Calendar.HOUR_OF_DAY, (int) BOOKING_DURATION);		
+		endDate.add(Calendar.HOUR_OF_DAY,  (int)BOOKING_DURATION);		
 		booking = new Booking(1+"", startDate.getTimeInMillis(), endDate.getTimeInMillis(), room, client);		
 	}
 	
@@ -51,7 +54,7 @@ public class BookingTest {
 	public void testEqualsObject() {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.HOUR_OF_DAY, (int) BOOKING_DURATION);
-		assertEquals(booking, new Booking(1+"", Calendar.getInstance().getTimeInMillis(), cal.getTimeInMillis(), room, client));
+		assertEquals(booking, new Booking(1+"", booking.getStartDate(), booking.getEndDate(), room, client));
 		cal.add(Calendar.HOUR_OF_DAY, 1);
 		assertNotEquals(booking, new Booking(1+"", Calendar.getInstance().getTimeInMillis(), cal.getTimeInMillis(), room, client));
 	}
@@ -60,5 +63,16 @@ public class BookingTest {
 	public void testBooked() {		
 		assertTrue(booking.isBook());
 	}
-
+	
+	@Test
+    public void putTotalPriceBookTest(){
+	    booking.putTotalPriceBook();
+	    assertTrue(0<booking.getTotalPrice());
+	    booking.setEndDate(0);
+	    double precioAnterior= booking.getTotalPrice();
+	    booking.putTotalPriceBook();
+	    assertTrue(precioAnterior==booking.getTotalPrice());
+	    
+	}
+	
 }

@@ -12,4 +12,7 @@ angular.module("reservas").service("bookService", ['requestService',  function(r
 	this.cancelBooking = function(bookingId) {
 		return requestService.request({ method: 'DELETE', url: '/api/books', data: bookingId });
 	}
+		
+	
+	
 }]);

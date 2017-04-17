@@ -3,6 +3,7 @@ package com.miw.hotel.controller;
 import static org.junit.Assert.*;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.junit.After;
@@ -18,6 +19,7 @@ import com.miw.hotel.exceptions.InvalidRoomException;
 import com.miw.hotel.model.Booking;
 import com.miw.hotel.model.Client;
 import com.miw.hotel.model.Room;
+import com.miw.hotel.model.Status;
 import com.miw.hotel.repository.BookingRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -159,6 +161,12 @@ public class BookingControllerTest {
         }
     }
 		
-
+	@Test
+	public void testCancelBook() {
+		List<Booking> booking = bookingController.getByHotelID(HOTEL_ID);
+		bookingController.cancelBooking(booking.get(0).getId());
+		
+		assertEquals(Status.CANCEL.name(), booking.get(0).getStatus());
+	}
 
 }
